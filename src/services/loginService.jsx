@@ -18,7 +18,7 @@ class LoginService {
         return Xhr.post('/users/login', params, success, fail);
     }
 
-    goRegister(params,succ,fail){
+    goRegister(params,success,fail){        
         return Xhr.post('/users/registor',params,success,fail);
     }
 }

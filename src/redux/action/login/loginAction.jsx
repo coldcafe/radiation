@@ -20,6 +20,8 @@ const resLogin = (res) => {
     }
 }
 
+
+
 /**
  * 初始化数据
  * @return
@@ -38,22 +40,22 @@ export const initialState = () => {
  */
 
 export const goLogin = (params) => {
+    console.log(params);
     return dispatch => {
         dispatch(loading(true));
         LoginService.goLogin(params, (res) => {
-            dispatch(loading(false));
-            dispatch(resLogin(res));
-            if(res.length > 0) {
-                Config.localItem(Config.localKey.userToken, (new Date()).getTime()); // 模拟登录成功返回的Token
-                browserHistory.push('/home');
-            } else {
-                Message.error('用户名或密码错误');
-            }
+            console.log(res);
+           // dispatch(loading(false));
+            
+            // dispatch(resLogin(res));
+            // console.log(res);
+            // if(res.length > 0) {
+            //     Config.localItem(Config.localKey.userToken, (new Date()).getTime()); // 模拟登录成功返回的Token
+            //     browserHistory.push('/home');
+            // } else {
+            //     Message.error('用户名或密码错误');
+            // }
         },(error)=>{
-            dispatch(resLogin(error));
-            Config.localItem(Config.localKey.userToken, (new Date()).getTime()); 
-            console.log('hah');
-            browserHistory.push('/home');
             Message.error(error.Message);
         })
     }

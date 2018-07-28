@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { browserHistory } from 'react-router';
+import { Message,Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
 import styles from './register.less';
+import LoginService from '../../services/loginService';
+import loginService from '../../services/loginService';
+
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -34,17 +38,42 @@ class Register extends React.Component{
         confirmDirty: false,
         autoCompleteResult: [],
       };
+
+
       handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
           if (!err) {
-            console.log('Received values of form: ', values);
+            let username=values.username;
+            let password=values.password;
+            let registerParams={
+              username,
+              password,
+            }
+            console.log(registerParams);
+            loginService.goRegister(registerParams,(response)=>{
+              Message.success('注册账号成功',2,(close)=>{
+                browserHistory.push('/login');
+              });
+            },(error)=>{
+              Message.error(error.message);
+            });
           }
         });
       }
       handleConfirmBlur = (e) => {
         const value = e.target.value;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+      }
+      
+      validateToNextPassword = (rule, value, callback) => {
+        const form = this.props.form;
+        console.log(value.length);
+        if(value.length<6||value.length>16){
+          callback('请输入密码,密码为6-16位');
+          form.validateFields(['confirm'], { force: true });
+        }
+        callback();
       }
       compareToFirstPassword = (rule, value, callback) => {
         const form = this.props.form;
@@ -54,17 +83,9 @@ class Register extends React.Component{
           callback();
         }
       }
-      validateToNextPassword = (rule, value, callback) => {
-        const form = this.props.form;
-        if (value && this.state.confirmDirty) {
-          form.validateFields(['confirm'], { force: true });
-        }
-        callback('请输入密码,密码为6-16位');
-      }
       render() {
         const { getFieldDecorator } = this.props.form;
         const { autoCompleteResult } = this.state;
-    
         const formItemLayout = {
           labelCol: {
             xs: { span: 24 },
@@ -108,7 +129,7 @@ class Register extends React.Component{
 						<text >辐射检测后台管理系统</text>
 						</div>
                         <FormItem {...formItemLayout} label="账号">
-                            {getFieldDecorator('account', {
+                            {getFieldDecorator('username', {
                                     rules: [{
                                         required: true, message: '请输入账号，账号为唯一的登录方式',
                                         }],

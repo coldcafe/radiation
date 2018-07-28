@@ -1,5 +1,6 @@
 import Config from '../../config/index';
 const Tool = {};
+import {browserHistory} from 'react-router';
 
 const target = Config.target;
 /**
@@ -60,9 +61,12 @@ Tool.ajax = function (mySetting) {
             if (/application\/json/.test(head) || setting.dataType === 'json' && /^(\{|\[)([\s\S])*?(\]|\})$/.test(response)) {
                 response = JSON.parse(response);
             }
-            if (xhr.status == 200) { // 请求成功
+            if (xhr.status >= 200&&xhr.status<300) { // 请求成功
                 setting.success(response, setting, xhr);
             } else { // 请求失败
+                if(xhr.status==401){
+                    browserHistory.push('/login');
+                }
                 setting.error(response,setting,xhr);
             }
         }

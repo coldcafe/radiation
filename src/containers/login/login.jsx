@@ -41,7 +41,7 @@ class Login extends Component {
                     loginParams = { // 登录参数
                         username: username,
                         password: password	
-                    };
+					};
 				 actions.goLogin(loginParams);
 		     }
 	     });
@@ -50,12 +50,9 @@ class Login extends Component {
 	checkUsername = (rule, value, callback) => {
 		const form = this.props.form;
         if (!value) {
-            callback();
-        } else if (!Config.checkEng(value)) {
-	    	callback(Config.message.usernameEng);
-	    } else {
-	    	callback();
-	    }
+			callback('用户名不能为空');
+		}
+		callback();
 	}
 	// 验证密码
 	checkPassword = (rule, value, callback) => {

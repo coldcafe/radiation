@@ -2,10 +2,11 @@ import { fromJS } from 'immutable';
 import { LOADING } from '../constants/dispatchTypes';
 
 import Login from './login/loginReducer'; // 登录界面
-
+import Config from '../../config/index';  // 获取到 本地token 
 // 初始化state数据
 const initialState = {
-    loading: false
+    loading: false,
+    token:Config.localItem(Config.localKey.userToken),
 };
 
 /**
