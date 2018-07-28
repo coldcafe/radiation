@@ -1,5 +1,5 @@
 const Main = {
-	target: process.env.NODE_ENV !== 'production' ? 'http://radiation-api-2.momandai.com' : 'http://radiation-api-2.momandai.com', //目标网站
+	target: process.env.NODE_ENV !== 'production' ? 'http://radiation-api-v2.momandai.com' : 'http://radiation-api-v2.momandai.com', //目标网站
     name: 'Ant Design Admin',
     prefix: 'antdAdmin',
     footerText: 'Ant Design Admin 版权所有 © 2017 由 sosout 支持',

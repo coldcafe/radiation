@@ -3,6 +3,7 @@ import pureRender from 'pure-render-decorator';
 import { is, fromJS} from 'immutable';
 import { Router, Route, IndexRoute, browserHistory, History, Link } from 'react-router';
 import { connect } from 'react-redux';
+import Config from '../../config/index';
 
 // 公共面包屑
 import { Bcrumb } from '../../component/bcrumb/bcrumb';
@@ -21,6 +22,9 @@ class Main extends Component {
              current: 0
         };
     }
+    componentDidMount(){
+        console.log()
+    }
     next() {
         const current = this.state.current + 1;
         this.setState({ current });
@@ -28,6 +32,9 @@ class Main extends Component {
     prev() {
         const current = this.state.current - 1;
         this.setState({ current });
+    }
+    getToken=()=>{
+        console.log(Config.localItem(Config.localKey.userToken));
     }
 	render() { 
         let linkHtml = '<link href="/antd/dist/app.css" rel="stylesheet" />';
@@ -45,6 +52,7 @@ class Main extends Component {
 		return (
         <div className="home-container">
             <Bcrumb title="快速入门" />
+            <button onClick={()=>{this.getToken()}}>dianji </button>
             <Row>
             	<Col span={24}>
                     <Card title="项目前言" extra={<a href="https://github.com/sosout/react-antd">如果觉得不错的话，请star一下吧 😊</a>} bordered={false}>
@@ -88,5 +96,4 @@ class Main extends Component {
 		);
 	}
 }
-
 export default Main;

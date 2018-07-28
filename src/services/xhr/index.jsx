@@ -134,7 +134,6 @@ Tool.delete = function (pathname, data, success, error) {
  * @param {function} error    请求失败执行方法
  */
 Tool.post = function (pathname, data, success, error) {
-    console.log(error);
     var setting = {
         url: target + pathname, //默认ajax请求地址
         type: 'POST', //请求的方式

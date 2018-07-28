@@ -8,6 +8,7 @@ import Config from '../../../config/index';
 import { RES_LOGIN, INITIAL_STATE } from '../../constants/loginTypes';
 import LoginService from '../../../services/loginService';
 import { loading } from '../index';
+import {TOKEN} from '../../constants/dispatchTypes';
 
 /**
  * 登录成功
@@ -33,6 +34,19 @@ export const initialState = () => {
 }
 
 /**
+ * token action
+ * 
+ */
+
+const  getToken=(token)=>{
+    return {
+        type:TOKEN,
+        token,
+    }
+}
+
+
+/**
  * 登录界面	
  * @param {username} 用户名
  * @param {password} 密码
@@ -44,18 +58,16 @@ export const goLogin = (params) => {
     return dispatch => {
         dispatch(loading(true));
         LoginService.goLogin(params, (res) => {
-            console.log(res);
-           // dispatch(loading(false));
-            
-            // dispatch(resLogin(res));
-            // console.log(res);
-            // if(res.length > 0) {
-            //     Config.localItem(Config.localKey.userToken, (new Date()).getTime()); // 模拟登录成功返回的Token
-            //     browserHistory.push('/home');
-            // } else {
-            //     Message.error('用户名或密码错误');
-            // }
+            dispatch(loading(false));
+            if(res){
+                dispatch(getToken(res.token));
+                Config.localItem(Config.localItem.userToken,res.token);
+                browserHistory.push('/home');
+            }else{
+                Message.error('系统错误');
+            }
         },(error)=>{
+            dispatch(loading(false));
             Message.error(error.Message);
         })
     }

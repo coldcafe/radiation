@@ -112,10 +112,11 @@ const twoui = (location, cb) => {
     }, 'twoui');
 }
 
-// 登录验证
+// 登录验证 。这里是判断存在token ，如果存在token 那么
 const requireAuth = (nextState, replace) => {
-	let token = (new Date()).getTime() - Config.localItem('USER_AUTHORIZATION');
-	if(token > 7200000) { // 模拟Token保存2个小时
+    let token = Config.localItem(Config.localItem.userToken);
+    console.log(token);
+	if(!token ) { // 模拟Token保存2个小时
 		replace({
 			pathname: '/login',
 			state: { nextPathname: nextState.location.pathname }
