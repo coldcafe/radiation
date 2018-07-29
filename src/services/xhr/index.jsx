@@ -1,12 +1,12 @@
 import Config from '../../config/index';
 const Tool = {};
 import {browserHistory} from 'react-router';
-
 const target = Config.target;
 /**
  * 发送ajax请求和服务器交互
  * @param {object} mySetting 配置ajax的配置
  */
+
 Tool.ajax = function (mySetting) {
     var setting = {
         url: window.location.pathname, //默认ajax请求地址
@@ -16,6 +16,7 @@ Tool.ajax = function (mySetting) {
         dataType: 'json',
         success: function (text) { }, //请求成功执行方法
         error: function (text) { } //请求失败执行方法
+        
     };
 
     var aData = []; //存储数据
@@ -39,7 +40,8 @@ Tool.ajax = function (mySetting) {
             xhr.send();
         } else { //post方式请求
             xhr.open(setting.type, setting.url, setting.async);
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded",);
+            xhr.setRequestHeader("Authorization",Config.localItem(Config.localKey.userToken));
             xhr.send(sData);
         }
     } catch (e) {

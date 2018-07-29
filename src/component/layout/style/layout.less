@@ -2,6 +2,9 @@
 .layout .ant-layout-sider-collapsed .ant-menu-submenu-vertical > .ant-menu-submenu-title:after {
     display: none;
 }
+.ant-layout.ant-layout-has-sider{
+    flex-direction: column;
+}
 
 .ant-layout-sider-trigger {
     background: #494949;
@@ -10,6 +13,11 @@
 .layout {
     position: relative;
     height: 100vh;
+    .body{
+        flex-direction: row;
+        position: relative;
+        height: auto;
+    }
     .ant-layout-sider-collapsed {
         .anticon {
             font-size: 16px;
@@ -47,12 +55,16 @@
 .layout-header {
     position: relative;
     box-shadow: 4px 4px 40px 0 rgba(0, 0, 0, .05);
-    background: #fff;
-    height: 46px;
+    background: #404040;
+    height: 64px;
     line-height: 46px;
     padding: 0;
+    .trigger-menu{
+        height: 64px;
+        background: #404040;
+    }
     .trigger {
-        height: 47px;
+        height: 64px;
         width: 47px;
         line-height: 47px;
         text-align: center;
@@ -61,17 +73,19 @@
         position: absolute;
         -webkit-transition: all .3s cubic-bezier(.55, .055, .675, .19);
         transition: all .3s cubic-bezier(.55, .055, .675, .19);
+        
     }
     .layout-header-menu {
         float: right;
         line-height: 45px;
         text-align: center;
     }
+    
 }
 
 .layout-footer {
     text-align: center;
-    height: 48px;
+    height: 64px;
     line-height: 48px;
     padding: 0;
     background: #fff;

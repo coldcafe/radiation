@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { browserHistory } from 'react-router';
 import { Message,Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
 import styles from './register.less';
-import LoginService from '../../services/loginService';
 import loginService from '../../services/loginService';
 
 
@@ -52,7 +51,7 @@ class Register extends React.Component{
             }
             console.log(registerParams);
             loginService.goRegister(registerParams,(response)=>{
-              Message.success('注册账号成功',2,(close)=>{
+              Message.success('注册账号成功',1,(close)=>{
                 browserHistory.push('/login');
               });
             },(error)=>{

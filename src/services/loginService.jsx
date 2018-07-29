@@ -21,6 +21,10 @@ class LoginService {
     goRegister(params,success,fail){        
         return Xhr.post('/users/registor',params,success,fail);
     }
+
+    getUerList(params,success,fail){
+        return Xhr.post('/users/list',params,success,fail);
+    }
 }
 
 // 实例化再导出

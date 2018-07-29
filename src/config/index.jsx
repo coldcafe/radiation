@@ -1,8 +1,9 @@
 const Main = {
-	target: process.env.NODE_ENV !== 'production' ? 'http://radiation-api-v2.momandai.com' : 'http://radiation-api-v2.momandai.com', //目标网站
+	//http://193.112.148.188:5000/login
+	target: process.env.NODE_ENV !== 'production' ? 'http://193.112.148.188:5000' : 'http://193.112.148.188:5000/login', //目标网站
     name: 'Ant Design Admin',
     prefix: 'antdAdmin',
-    footerText: 'Ant Design Admin 版权所有 © 2017 由 sosout 支持',
+    footerText: '核辐射检测管理系统 版权所有 © 2018 由 成都xxx公司所有',
     logoSrc: 'https://t.alipayobjects.com/images/rmsweb/T1B9hfXcdvXXXXXXXX.svg',
     logoText: 'Antd Admin',
     needLogin: true,

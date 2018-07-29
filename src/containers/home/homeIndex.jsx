@@ -3,14 +3,15 @@ import pureRender from 'pure-render-decorator';
 import { is, fromJS} from 'immutable';
 import { Router, Route, IndexRoute, browserHistory, History, Link } from 'react-router';
 import { connect } from 'react-redux';
+import { Icon, Row, Col, Card, Steps, Button, message } from 'antd';
+import styles from './style/home.less';
 import Config from '../../config/index';
-
 // 公共面包屑
 import { Bcrumb } from '../../component/bcrumb/bcrumb';
+import BaseInfoComponent from './baseinfo';
 
-import styles from './style/home.less';
 
-import { Icon, Row, Col, Card, Steps, Button, message } from 'antd';
+
 const Step = Steps.Step;
 
 
@@ -21,6 +22,19 @@ class Main extends Component {
         this.state = {
              current: 0
         };
+    }
+    json={
+        measurePerson:'小白',
+        machineNO:'测试机器a',
+        taskNO:'12345678',
+        measuredAt:'18-01-18',
+        type:'类型A',
+        weather:'良好',
+        address:'深圳市福田中心莲花一村',
+        contactPerson:'深圳普瑞升科技有限公司',
+        contactPersonTel:'15889563342',
+        GPS:'154，188',
+        details:'查看详情',
     }
     componentDidMount(){
         console.log()
@@ -34,8 +48,10 @@ class Main extends Component {
         this.setState({ current });
     }
     getToken=()=>{
-        console.log(Config.localItem(Config.localKey.userToken));
+        console.log(Config.localKey.userToken);
+        console.log('token'+Config.localItem(Config.localKey.userToken));
     }
+
 	render() { 
         let linkHtml = '<link href="/antd/dist/app.css" rel="stylesheet" />';
         const steps = [{
@@ -52,12 +68,10 @@ class Main extends Component {
 		return (
         <div className="home-container">
             <Bcrumb title="快速入门" />
-            <button onClick={()=>{this.getToken()}}>dianji </button>
             <Row>
             	<Col span={24}>
-                    <Card title="项目前言" extra={<a href="https://github.com/sosout/react-antd">如果觉得不错的话，请star一下吧 😊</a>} bordered={false}>
-                      <p>本工程主要基于react + redux + immutable + less + ES6/7 + webpack + fetch + react-router + antd(1.x)实现的SPA后台管理系统模板。</p>
-                      <p>编码时间：8:00——9:30, 下班时间——24:00，其他时间要工作。代码未优化，处女座代码必须要优化。由于代码延后，先向大家说声抱歉。您有什么问题可以私信我<a href="https://segmentfault.com/u/sosout">segmentfault</a>。</p>
+                    <Card  title="基本信息"  bordered={false}>
+                     <BaseInfoComponent className="base-info" data={this.json}/>
                     </Card>  
                     <Card title="项目上手" className="mg-top20">
                         <Steps current={current}>

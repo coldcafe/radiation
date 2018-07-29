@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import { Bcrumb } from '../../component/bcrumb/bcrumb';
 import { Table,Spin } from 'antd';
 
 const columns=[{
@@ -92,6 +93,7 @@ class List extends Component{
     render(){
         return(
             <div>
+                <Bcrumb title="数据展示" icon="user"></Bcrumb>
                 <Spin 
                     size={'large'}
                     spinning={true}

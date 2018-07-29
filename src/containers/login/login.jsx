@@ -78,7 +78,7 @@ class Login extends Component {
 						</div>
 				        <FormItem hasFeedback>
                             {getFieldDecorator('username', { initialValue: '', rules: [{ required: true, message: Config.message.usernameInput }, { validator: this.checkUsername }] })(
-                                <Input size="large" placeholder="请输入账号" maxLength="6" />
+                                <Input size="large" placeholder="请输入账号" />
                             )}
 				        </FormItem>
 				        <FormItem hasFeedback>
