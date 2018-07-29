@@ -1,6 +1,6 @@
 const Main = {
 	//http://193.112.148.188:5000/login
-	target: process.env.NODE_ENV !== 'production' ? 'http://193.112.148.188:5000' : 'http://193.112.148.188:5000/login', //目标网站
+	target: process.env.NODE_ENV !== 'production' ? 'http://193.112.148.188:5000' : 'http://193.112.148.188:5000', //目标网站
     name: 'Ant Design Admin',
     prefix: 'antdAdmin',
     footerText: '核辐射检测管理系统 版权所有 © 2018 由 成都xxx公司所有',
