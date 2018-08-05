@@ -55,8 +55,6 @@ class Main extends Component {
 		// 这个组件是一个包裹组件，所有的路由跳转的页面都会以this.props.children的形式加载到本组件下
 		return (
 		<Layout className="layout">
-			<Lheader collapsed={this.state.collapsed} toggle={ collapsed => this.toggle(collapsed)}/>
-			<Layout className="body" >
 			<Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
 		        <div className="layout-logo">
 		        	<Link to="/home">
@@ -64,13 +62,15 @@ class Main extends Component {
 			        	<span className="logo-text">{Config.logoText}</span>
 		        	</Link>
 		        </div>
-	        	<Lmenu mode={ this.state.mode } />
+				<Lmenu mode={ this.state.mode } />
 	        </Sider>
+			<Layout className="body" >
+			<Lheader collapsed={this.state.collapsed} toggle={ collapsed => this.toggle(collapsed)}/>
 			<Content className="layout-content">
 	           	{this.props.children}
 	        </Content>
 			</Layout>
-			<Lfooter />
+			{/* <Lfooter /> */}
 	    </Layout>
 		);
 	}
