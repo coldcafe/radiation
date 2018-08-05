@@ -30,3 +30,61 @@
 .steps-action {
     margin-top: 24px;
 }
+
+.table-row{
+    .ant-row{
+        display: flex;
+    }
+}
+
+.flex-center{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ant-col-20,.ant-col-4,.ant-col-2,.ant-col-6{
+    border: 1px solid #ccc;
+    min-height: 30px;
+    margin-top: -1px;
+    box-sizing: border-box;
+    .flex-center
+}
+
+.col-empty-4{
+    min-height: 60px;
+}
+.col-empty-20{
+    border-right: 0;
+    display: block;
+}
+
+
+.measure-10{
+    flex: 1;
+    min-height: 30px;
+    margin-top: -1px;
+    box-sizing: border-box;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    .flex-center
+}
+
+.point_pic{
+    cursor: pointer;
+    text-align: center;
+}
+.pic-wall-container{
+    text-align: center;
+}
+.pic-wall{
+    display: inline-block;
+    padding: 20px 0;
+    width: 210px;
+    height: 300px;
+    img{
+        width: 100%;
+        height: auto;
+    }
+}

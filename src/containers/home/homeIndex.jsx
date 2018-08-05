@@ -3,7 +3,7 @@ import pureRender from 'pure-render-decorator';
 import { is, fromJS} from 'immutable';
 import { Router, Route, IndexRoute, browserHistory, History, Link } from 'react-router';
 import { connect } from 'react-redux';
-import { Icon, Row, Col, Card, Steps, Button, message,Input } from 'antd';
+import { Icon, Row, Col, Card, Steps, Button, message,Input, Modal, Carousel } from 'antd';
 const { TextArea } = Input;
 //import styles from './style/home.less';
 require('./style/home.less');
@@ -23,7 +23,11 @@ class Main extends Component {
     constructor(props) {
     	super(props);
         this.state = {
-             current: 0
+             current: 0,
+             previewVisible:false,
+             width: 0,
+             height: 0,
+             imgStyle: {}
         };
     }
     json={
@@ -54,6 +58,39 @@ class Main extends Component {
         console.log(Config.localKey.userToken);
         console.log('token'+Config.localItem(Config.localKey.userToken));
     }
+    showImageModal(){
+        this.setState({previewVisible: true})
+    }
+
+    cancelModal() {
+        this.setState({
+            previewVisible: false
+        })
+    }
+
+    // setImgSize(){
+    //     let newImage = document.createElement('img')
+    //     newImage.src = this.currentImg
+
+    //     let width,height
+    //     width = newImage.width
+    //     height = newImage.height
+
+    //     if(width > height){
+    //         this.setState.imgStyle({
+    //             width: '100%',
+    //             height: '300px'
+    //         })
+    //     }
+    //     if(width < height){
+    //         this.setState.imgStyle({
+    //             width: '200px',
+    //             height: '100%'
+    //         })
+    //     }
+
+    // }
+    
 
 	render() { 
         let linkHtml = '<link href="/antd/dist/app.css" rel="stylesheet" />';
@@ -80,10 +117,31 @@ class Main extends Component {
                        <DataTable data={[]} ></DataTable>
                     </Card> 
                     <Card title="点位示意图" bordered={true} className="mg-top20">
-
+                        <div className="point_pic">
+                            <img src={require("../../image/girl.jpg")} alt="" style={{width: '300px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
+                            <Modal visible={this.state.previewVisible} footer={null} onCancel={() => {this.cancelModal()}}>
+                                <img alt="example" style={{ width: '100%' }} src={require("../../image/girl.jpg")} />
+                            </Modal>
+                        </div>
                     </Card>
                     <Card title="照片" bordered={true} className="mg-top20">
-
+                        <div className="pic-wall-container">
+                            <div className="pic-wall">
+                                <img src={require("../../image/girl.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
+                            </div>
+                            <div className="pic-wall">
+                                <img src={require("../../image/1.jpg")} alt="" onClick={()=>{this.showImageModal()}}/>
+                            </div>
+                            <div className="pic-wall">
+                                <img src={require("../../image/2.jpg")} alt="" onClick={()=>{this.showImageModal()}}/>
+                            </div>
+                            <div className="pic-wall">
+                                <img src={require("../../image/3.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
+                            </div>
+                            <div className="pic-wall">
+                                <img src={require("../../image/4.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
+                            </div>
+                        </div>
                     </Card>
                     <Card title="结论总结" bordered={true} className="mg-top20">
                         <Input
