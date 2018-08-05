@@ -124,6 +124,9 @@ class Main extends Component {
                             </Modal>
                         </div>
                     </Card>
+                    <Card>
+                        <MyCanvas/>
+                    </Card>
                     <Card title="照片" bordered={true} className="mg-top20">
                         <div className="pic-wall-container">
                             <div className="pic-wall">
@@ -151,9 +154,6 @@ class Main extends Component {
                      
                         />
                         <Button>生成word文档</Button>
-                    </Card>
-                    <Card>
-                        <MyCanvas/>
                     </Card>
                     {/* <Card title="项目上手" className="mg-top20">
                         <Steps current={current}>
