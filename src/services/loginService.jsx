@@ -25,6 +25,11 @@ class LoginService {
     getUerList(params,success,fail){
         return Xhr.post('/users/list',params,success,fail);
     }
+
+    getreportslist(params,success,fail){
+        return Xhr.get('/reports/list',params,success,fail);
+    }
+
 }
 
 // 实例化再导出

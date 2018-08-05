@@ -63,9 +63,11 @@ Tool.ajax = function (mySetting) {
             if (/application\/json/.test(head) || setting.dataType === 'json' && /^(\{|\[)([\s\S])*?(\]|\})$/.test(response)) {
                 response = JSON.parse(response);
             }
-            if (xhr.status >= 200&&xhr.status<300) { // 请求成功
+            if (xhr.status >= 200&&xhr.status<400) { // 请求成功
+                console.log('xhr===='+xhr.status);
                 setting.success(response, setting, xhr);
-            } else { // 请求失败
+            } else { // 请求失败 
+                console.log('xhr===='+xhr.status);
                 if(xhr.status==401){
                     browserHistory.push('/login');
                 }

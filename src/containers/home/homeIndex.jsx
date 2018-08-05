@@ -3,14 +3,17 @@ import pureRender from 'pure-render-decorator';
 import { is, fromJS} from 'immutable';
 import { Router, Route, IndexRoute, browserHistory, History, Link } from 'react-router';
 import { connect } from 'react-redux';
-import { Icon, Row, Col, Card, Steps, Button, message } from 'antd';
-import styles from './style/home.less';
+import { Icon, Row, Col, Card, Steps, Button, message,Input } from 'antd';
+const { TextArea } = Input;
+//import styles from './style/home.less';
+require('./style/home.less');
 import Config from '../../config/index';
+
 // 公共面包屑
 import { Bcrumb } from '../../component/bcrumb/bcrumb';
 import BaseInfoComponent from './baseinfo';
-
-
+import DataTable from './dataTable';
+import MyCanvas from './mycanvas';
 
 const Step = Steps.Step;
 
@@ -70,10 +73,31 @@ class Main extends Component {
             <Bcrumb title="快速入门" />
             <Row>
             	<Col span={24}>
-                    <Card  title="基本信息"  bordered={false}>
-                     <BaseInfoComponent className="base-info" data={this.json}/>
-                    </Card>  
-                    <Card title="项目上手" className="mg-top20">
+                    <Card  title="基本信息"  bordered={false} className="mg-top20">
+                        <BaseInfoComponent  data={this.json}/>
+                    </Card> 
+                    <Card title="测量数据" bordered={true} className="mg-top20">
+                       <DataTable data={[]} ></DataTable>
+                    </Card> 
+                    <Card title="点位示意图" bordered={true} className="mg-top20">
+
+                    </Card>
+                    <Card title="照片" bordered={true} className="mg-top20">
+
+                    </Card>
+                    <Card title="结论总结" bordered={true} className="mg-top20">
+                        <Input
+                            type='textarea'
+                            placeholder='textarea内容'
+                            autosize={{ minRows: 12 }}
+                     
+                        />
+                        <Button>生成word文档</Button>
+                    </Card>
+                    <Card>
+                        <MyCanvas/>
+                    </Card>
+                    {/* <Card title="项目上手" className="mg-top20">
                         <Steps current={current}>
                           {steps.map(item => <Step key={item.title} title={item.title} />)}
                         </Steps>
@@ -103,7 +127,7 @@ class Main extends Component {
                     </Card> 
                     <Card title="项目说明" className="mg-top20">
                         <p>此项目是本人空余时间搭建的。希望大家提供宝贵的意见和建议，谢谢。</p>
-                    </Card> 
+                    </Card>  */}
                 </Col>
             </Row>
         </div>	

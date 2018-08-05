@@ -11,55 +11,57 @@ class BaseInfoComponent extends Component{
     render(){       
         const {data}=this.state;
         return(
-            <div>
+            <div className="baseinfo-container">
                 <Row>
                     <Col span={12}>
-                        <text>测量人:</text>
-                        <text>data.measurePerson</text>
+                        <Row>
+                            <Col span={10}>测量人</Col>
+                            <Col span={14}>data.measurePerson</Col>
+                        </Row>
                     </Col>
                     <Col span={12}>
-                        <text>仪器型号和编号:</text>
-                        <text>data.machineNO</text>
+                        <Col span={10}>仪器型号和编号:</Col>
+                        <Col span={14}>data.machineNO</Col>
                     </Col>
                 </Row>
                 <Row>
                     <Col span={12}>
-                        <text>任务编号:</text>
-                        <text>data.taskNO</text>
+                        <Col span={10}>任务编号:</Col>
+                        <Col span={14}>data.taskNO</Col>                    
                     </Col>
                     <Col span={12}>
-                        <text>测量时间:</text>
-                        <text>data.measuredAt</text>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={12}>
-                        <text>检查类别:</text>
-                        <text>data.type</text>
-                    </Col>
-                    <Col span={12}>
-                        <text>天气状况:</text>
-                        <text>data.weather</text>
+                        <Col span={10}>测量时间:</Col>
+                        <Col span={14}>data.measuredAt</Col>
                     </Col>
                 </Row>
                 <Row>
                     <Col span={12}>
-                        <text>测量地址:</text>
-                        <text>data.address</text>
+                         <Col span={10}>检查类别:</Col>
+                        <Col span={14}>data.type</Col>
                     </Col>
                     <Col span={12}>
-                        <text>被检测单位联系人:</text>
-                        <text>data.contactPerson</text>
+                        <Col span={10}>天气状况:</Col>
+                        <Col span={14}>data.weather</Col>
                     </Col>
                 </Row>
                 <Row>
                     <Col span={12}>
-                        <text>被检测单位联系人电话:</text>
-                        <text>data.contactPersonTel</text>
+                        <Col span={10}>测量地址:</Col>
+                        <Col span={14}>data.address</Col>
                     </Col>
                     <Col span={12}>
-                        <text>GPS地址:</text>
-                        <text>data.GPS</text>
+                        <Col span={10}>被检测单位联系人:</Col>
+                        <Col span={14}>data.contactPerson</Col>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span={12}>
+                        <Col span={10}>被检测单位联系人电话:</Col>
+                        <Col span={14}>data.contactPersonTel</Col>
+                    </Col>
+                    <Col span={12}>
+                        <Col span={10}>GPS地址:</Col>
+                        <Col span={14}>data.GPS</Col>
                     </Col>
                 </Row>
             </div>
