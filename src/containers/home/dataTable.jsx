@@ -24,20 +24,20 @@ export default class DataTable extends Component{
     render(){
         return(
             <div>
-                <Row>
+                <Row className="table-row">
                     <Col span={4}>
                         <text>测量位置</text>
                     </Col>
                     <Col span={20}>测量位置1</Col>
                 </Row>
-                <Row>
-                    <Col span={4}></Col>
-                    <Col span={20}>
+                <Row className="table-row">
+                    <Col span={4} className="col-empty-4"></Col>
+                    <Col span={20} className="col-empty-20">
                         {this.getmeasureData(0)}
                         {this.getmeasureData(0)}  
                     </Col>
                 </Row>
-                <Row>
+                <Row className="table-row">
                     <Col span={4}>数据处理</Col>
                     <Col span={2}>均值R</Col>
                     <Col span={4}></Col>

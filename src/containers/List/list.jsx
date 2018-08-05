@@ -154,11 +154,12 @@ class List extends Component{
                     <div className="search-body">
                         <div className="search-menu">
                             <span>时间</span>
-                            <RangePicker  onChange={(message)=>{this.onchangePicker(message)}}/>
+                            <RangePicker className="search-input"  onChange={(message)=>{this.onchangePicker(message)}}/>
                         </div>
                         <div  className="search-menu">
                             <span >测量人</span>
                             <Input 
+                                className="search-input"
                                 id={123}
                                 value={this.state.mesurePerson}
                                 onChange={(e)=>{this.mesurePerson(e)}}
@@ -168,6 +169,7 @@ class List extends Component{
                         <div className="search-menu">
                             <span>测量地点</span>
                             <Input
+                                className="search-input"
                                 id={234}
                                 value={this.state.address}
                                 onChange={(e)=>{this.getAddress(e)}}
