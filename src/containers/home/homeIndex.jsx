@@ -124,23 +124,37 @@ class Main extends Component {
                             </Modal>
                         </div>
                     </Card>
+                    <Card>
+                        <MyCanvas/>
+                    </Card>
                     <Card title="照片" bordered={true} className="mg-top20">
                         <div className="pic-wall-container">
-                            <div className="pic-wall">
-                                <img src={require("../../image/girl.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
-                            </div>
-                            <div className="pic-wall">
-                                <img src={require("../../image/1.jpg")} alt="" onClick={()=>{this.showImageModal()}}/>
-                            </div>
-                            <div className="pic-wall">
-                                <img src={require("../../image/2.jpg")} alt="" onClick={()=>{this.showImageModal()}}/>
-                            </div>
-                            <div className="pic-wall">
-                                <img src={require("../../image/3.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
-                            </div>
-                            <div className="pic-wall">
-                                <img src={require("../../image/4.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
-                            </div>
+                            <ul className="pic-container" style={{width: 215*8+'px'}}>
+                                <li className="pic-wall">
+                                    <img src={require("../../image/girl.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
+                                </li>
+                                <li className="pic-wall">
+                                    <img src={require("../../image/1.jpg")} alt="" onClick={()=>{this.showImageModal()}}/>
+                                </li>
+                                <li className="pic-wall">
+                                    <img src={require("../../image/2.jpg")} alt="" onClick={()=>{this.showImageModal()}}/>
+                                </li>
+                                <li className="pic-wall">
+                                    <img src={require("../../image/3.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
+                                </li>
+                                <li className="pic-wall">
+                                    <img src={require("../../image/4.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
+                                </li>
+                                <li className="pic-wall">
+                                    <img src={require("../../image/1.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
+                                </li>
+                                <li className="pic-wall">
+                                    <img src={require("../../image/2.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
+                                </li>
+                                <li className="pic-wall">
+                                    <img src={require("../../image/3.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
+                                </li>
+                            </ul>
                         </div>
                     </Card>
                     <Card title="结论总结" bordered={true} className="mg-top20">
@@ -151,9 +165,6 @@ class Main extends Component {
                      
                         />
                         <Button>生成word文档</Button>
-                    </Card>
-                    <Card>
-                        <MyCanvas/>
                     </Card>
                     {/* <Card title="项目上手" className="mg-top20">
                         <Steps current={current}>
