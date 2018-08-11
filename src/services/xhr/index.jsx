@@ -37,6 +37,8 @@ Tool.ajax = function (mySetting) {
         if (setting.type == 'GET' || setting.type == 'DELETE') { //get、delete方式请求
             sData = setting.url + '?' + sData;
             xhr.open(setting.type, sData + '&' + new Date().getTime(), setting.async);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded",);
+            xhr.setRequestHeader("Authorization",Config.localItem(Config.localKey.userToken));
             xhr.send();
         } else { //post方式请求
             xhr.open(setting.type, setting.url, setting.async);

@@ -27,7 +27,8 @@ class Main extends Component {
              previewVisible:false,
              width: 0,
              height: 0,
-             imgStyle: {}
+             imgStyle: {},
+             isShowCanvas: false
         };
     }
     json={
@@ -68,28 +69,12 @@ class Main extends Component {
         })
     }
 
-    // setImgSize(){
-    //     let newImage = document.createElement('img')
-    //     newImage.src = this.currentImg
-
-    //     let width,height
-    //     width = newImage.width
-    //     height = newImage.height
-
-    //     if(width > height){
-    //         this.setState.imgStyle({
-    //             width: '100%',
-    //             height: '300px'
-    //         })
-    //     }
-    //     if(width < height){
-    //         this.setState.imgStyle({
-    //             width: '200px',
-    //             height: '100%'
-    //         })
-    //     }
-
-    // }
+    setCanvas = () => {
+        let flag = !this.state.isShowCanvas
+        this.setState({
+            isShowCanvas: flag
+        })
+    }
     
 
 	render() { 
@@ -123,8 +108,11 @@ class Main extends Component {
                                 <img alt="example" style={{ width: '100%' }} src={require("../../image/girl.jpg")} />
                             </Modal>
                         </div>
+                        <div>
+                            <Button onClick={this.setCanvas}>编辑</Button>
+                        </div>
                     </Card>
-                    <Card>
+                    <Card style={{display: this.state.isShowCanvas?'block':'none'}}>
                         <MyCanvas/>
                     </Card>
                     <Card title="照片" bordered={true} className="mg-top20">
@@ -160,11 +148,14 @@ class Main extends Component {
                     <Card title="结论总结" bordered={true} className="mg-top20">
                         <Input
                             type='textarea'
-                            placeholder='textarea内容'
+                            placeholder='请输入结论总结'
                             autosize={{ minRows: 12 }}
-                     
+                            rows='6'
+                            className="summary-content"
                         />
-                        <Button>生成word文档</Button>
+                        <div className="summary-btn">
+                            <Button className="word-btn" size="large">生成word文档</Button>
+                        </div>
                     </Card>
                     {/* <Card title="项目上手" className="mg-top20">
                         <Steps current={current}>

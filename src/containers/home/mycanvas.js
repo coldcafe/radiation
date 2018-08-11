@@ -255,7 +255,7 @@ class MyCanvas extends Component{
                 <Layout style = {{backgroundColor:'rgba(255,255,255,0)'}}>
                     <Layout >
                         <Header style = {{backgroundColor:'rgba(255,255,255,0)'}}>
-                            <h1  style = {{backgroundColor:'rgba(255,255,255,0)'}}>HTML5 canvas 画板</h1>
+                            <h1  style = {{backgroundColor:'rgba(255,255,255,0)', textAlign: 'center'}}>画板</h1>
                         </Header>
                     </Layout>
 
