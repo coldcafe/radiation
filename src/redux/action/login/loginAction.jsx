@@ -65,10 +65,11 @@ export const goLogin = (params) => {
                 browserHistory.push('/home');
             }else{
                 Message.error('系统错误');
+
             }
         },(error)=>{
             dispatch(loading(false));
-            Message.error(error.Message);
+            Message.error(error.message);
         })
     }
 } 

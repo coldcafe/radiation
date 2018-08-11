@@ -83,7 +83,7 @@ class Login extends Component {
 				        </FormItem>
 				        <FormItem hasFeedback>
                             {getFieldDecorator('password', { rules: [{ required: true, message: Config.message.passwordInput }, { validator: this.checkPassword }] })(
-                                <Input size="large" type="password" placeholder="请输入密码" maxLength="6" />
+                                <Input size="large" type="password" placeholder="请输入密码" />
                             )}
 				        </FormItem>
 				        <FormItem>
@@ -92,10 +92,6 @@ class Login extends Component {
 						<div>
 							<Button size="large" onClick={()=>{this.pushtoRegister()}}>注册</Button>
 						</div>
-				        {/* <div className="login-account">
-                            <span>账号：sosout</span>
-                            <span>密码：sosout</span>
-				        </div> */}
 			        </Form>
 		        </Spin>
 			</div>
