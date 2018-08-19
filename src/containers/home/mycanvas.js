@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, Col, Layout, Row, Select, Modal, InputNumber, Radio} from 'antd';
+import {Button, Col, Layout, Row, Select, Modal, InputNumber, Radio, Input} from 'antd';
 //import '../css/canvas.css';
 
 import ColorPicker from 'react-color';
@@ -32,6 +32,8 @@ class MyCanvas extends Component{
             c: null,            // 画布节点
             preX: 0,           // 起始点x坐标
             preY: 0,          // 起始点y坐标
+            markText: '',       //文本输入框
+            cStep: 2,
         };
     };
 
@@ -67,7 +69,7 @@ class MyCanvas extends Component{
 
     onWindowResize = () => {
         if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth) {
-            let winWidth = document.documentElement.clientWidth - 200;
+            let winWidth = document.documentElement.clientWidth - 500;
             console.log(winWidth);
             this.setState({
                 canvasWidth: winWidth
@@ -93,6 +95,11 @@ class MyCanvas extends Component{
         this.setState({
             drawType: e.target.value,
         });
+        if(e.target.value == 'text'){
+            this.setState({
+                markText: ''
+            })
+        }
         console.log(e.target.value);
         console.log(this.state.drawColor.hex);
     };
@@ -102,6 +109,12 @@ class MyCanvas extends Component{
             isFill: e.target.value
         })
     };
+
+    inputText = (e) => {
+        this.setState({
+            markText: e.target.value
+        })
+    }
 
     // 移动鼠标开始绘图
     canvasMouseMove = (e) => {
@@ -147,6 +160,21 @@ class MyCanvas extends Component{
                 } else {
                     cxt.strokeRect(x1, y1, x-x1, y-y1);
                 }
+            } else if(this.state.drawType === 'text'){
+                // 绘图之前清除掉上次移动鼠标绘制出的长方形，重新绘制
+                let popData = this.state.preDrawAry[this.state.preDrawAry.length - 1];
+                this.state.cxt.putImageData(popData,0,0);
+                let x1 = this.state.preX;
+                let y1 = this.state.preY;
+
+                if (this.state.isFill === 'true'){
+                    cxt.fillText(this.state.markText, x, y);
+                } else {
+                    cxt.stroke();
+                    this.setState({
+                        markText: ''
+                    })
+                }
             }
         }
     };
@@ -191,6 +219,24 @@ class MyCanvas extends Component{
         const c = this.state.c;
         this.state.cxt.clearRect(0,0,c.width,c.height);
     };
+
+    restoreText = () => {
+        let len = this.state.preDrawAry.length - this.state.cStep
+        if(len > 0){
+            this.setState({
+                cStep: this.state.cStep + 2
+            })
+        }else if(len <= 0){
+            this.setState({
+                preDrawAry: [],
+                cStep: 2
+            })
+            this.clearCxt()
+            return
+        }
+        let popData = this.state.preDrawAry[len];
+        this.state.cxt.putImageData(popData,0,0);
+    }
 
     // 在画布上展示图片
     addImage = () => {
@@ -264,12 +310,13 @@ class MyCanvas extends Component{
                         <Sider style = {{backgroundColor:'white', width: this.state.siderWidth}}>
 
                             <Row  style={{ paddingTop: 10 ,paddingBottom: 10}}>
-                                <Col offset={2} span={9}>
+                                <Col offset={2} span={18}>
                                     <Button onClick = {this.clearCxt}>清空画布</Button>
+                                    <Button onClick = {this.restoreText} disabled={this.state.preDrawAry.length == 0}>回退</Button>
                                 </Col>
-                                <Col offset={2} span={9}>
+                                {/* <Col offset={2} span={9}>
                                     <Button onClick = {this.addImage}>填充图片</Button>
-                                </Col>
+                                </Col> */}
                             </Row>
                             <hr/>
                             <Row style={{ paddingTop: 10 }}>
@@ -317,6 +364,7 @@ class MyCanvas extends Component{
                                     <RadioButton value="line">画笔</RadioButton>
                                     <RadioButton value="rect">长方形</RadioButton>
                                     <RadioButton value="arc">圆形</RadioButton>
+                                    <RadioButton value="text">文字</RadioButton>
                                 </RadioGroup>
                             </Row>
                             <Row style={{ paddingTop: 10 }}>
@@ -351,6 +399,10 @@ class MyCanvas extends Component{
                                         }
                                     </div>
                                 </Col>
+                            </Row>
+
+                            <Row style={{ display: this.state.drawType == 'text' ? 'block':'none' }}>
+                                <Input placeholder="请输入文本" value={this.state.markText} onChange={this.inputText}/>
                             </Row>
 
                         </Sider>
