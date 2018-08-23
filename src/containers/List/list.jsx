@@ -59,16 +59,20 @@ class List extends Component{
         super(props);
         this.state={
             length:null,
-            dataSource:[],
+            dataSource:{},
             loading:true,
             measurePerson:null,
             address:null,
+       
+            
         }
         this.startTime=null;
         this.endTime=null;
+        this.page=1;
+        this.limit=2;
     }
     componentDidMount(){
-        this.getListInfo('','','','','');
+        this.getListInfo();
     }
     searchMessageWithUser=(message)=>{
         
@@ -76,25 +80,24 @@ class List extends Component{
     searchMessageWithData=()=>{
         
     }
-    getListInfo=(startTime,endTime,address,limit,page)=>{
+    getListInfo=()=>{
         var json={};
-        if(startTime){
-            json.startTime=startTime;
+        if(this.startTime){
+            json.startTime=this.startTime;
         }
-        if(endTime){
-            json.endTime=endTime;
+        if(this.endTime){
+            json.endTime=this.endTime;
         }
         if(this.state.address){
             json.address=this.state.address;
         }
-        if(limit){
-            json.limit=limit;
+        if(this.limit){
+            json.limit=this.limit;
         }
-        if(page){
-            json.page=page;
+        if(this.page){
+            json.page=this.page;
         }
         LoginService.getreportslist(json,(response)=>{
-            console.log(response);
             this.setState({
                 dataSource:response,
                 loading:false,
@@ -110,37 +113,38 @@ class List extends Component{
     onShowSizeChange=(current,size)=>{
         
     }
-    Pagination=(page)=>{
-        return(
-            <Pagination
-                defaultCurrent={page}
-                //defaultPageSize={3}
-                pageSize={3}
-                onShowSizeChange={(current, size)=>{this.onShowSizeChange(current,size)}}
-                total={9}
-            />
-        )
-    }
     //获取到时间
     onchangePicker=(message)=>{
-        this.startTime=message[0].valueOf();
-        this.endTime=message[1].valueOf();
+        console.log(message);
+        if(message.length>0){
+            this.startTime=parseInt(message[0].valueOf()/1000);
+            this.endTime=parseInt(message[1].valueOf()/1000) ;
+            this.page=1;
+        }else{
+            this.startTime=null;
+            this.endTime=null;
+            this.page=1;
+        }
+       
     }
     //获取到测量人
     mesurePerson=(e)=>{
         console.log(e);
+        this.page=1;
         this.setState({
             mesurePerson:e.target.value,
         });
-      //  this.mesurePerson=e.e.target.value;
     }    
     //获取到输入address
     getAddress=(e)=>{
+        this.page=1;
         his.setState({
             address:e.target.value,
         });
     }
-
+    onClickToSearch=()=>{
+        this.getListInfo();
+    }
     render(){
         return(
             <div >
@@ -154,7 +158,10 @@ class List extends Component{
                     <div className="search-body">
                         <div className="search-menu">
                             <span>时间</span>
-                            <RangePicker className="search-input"  onChange={(message)=>{this.onchangePicker(message)}}/>
+                            <RangePicker 
+                                className="search-input"  
+                                onChange={(message)=>{this.onchangePicker(message)}}
+                                />
                         </div>
                         <div  className="search-menu">
                             <span >测量人</span>
@@ -176,15 +183,26 @@ class List extends Component{
 
                             />
                         </div>
-                        <Button>搜索</Button>
+                        <Button onClick={()=>{this.onClickToSearch()}}>搜索</Button>
                         
                     </div>
                     <Table
                         columns={columns}
-                        dataSource={this.state.dataSource}
-                        pagination={ this.Pagination() }
+                        dataSource={this.state.dataSource.reports}
+                        rowKey={(item)=>item.id}
+                        pagination={false}
                     > 
                     </Table>
+                    <Pagination 
+                        defaultCurrent={1} 
+                        total={this.state.dataSource.count} 
+                        pageSize={2}
+                        current={this.page}
+                        onChange={(page,pageSize)=>{
+                            this.page=page;
+                            this.getListInfo();
+                        }}
+                    />
                 </Spin>
                 
             </div>
