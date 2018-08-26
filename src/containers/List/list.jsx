@@ -6,53 +6,9 @@ import styles from './style/list.less';
 import loginService from '../../services/loginService';
 import moment from 'moment';
 import { stringify } from 'querystring';
+import { BrowerRouter as Router, Route, Link} from 'react-router'
 const RangePicker = DatePicker.RangePicker;
 
-const columns=[{
-        title:'测量人',
-        dataIndex:'measurePerson',
-        align:'center',
-    },{
-        title:'仪器型号和编号',
-        dataIndex:'machineNO',
-        align:'center',
-    },{
-        title:'任务编号',
-        dataIndex:'taskNO',
-        align:'center',
-    },{
-        title:'测量时间',
-        dataIndex:'measuredAt',
-        align:'center',
-    },{
-        title:'检查类别',
-        dataIndex:'type',
-        align:'center',
-    },{
-        title:'天气状况',
-        dataIndex:'weather',
-        align:'center',
-    },{
-        title:'测量地址',
-        dataIndex:'address',
-        align:'center',
-    },{
-        title:'被检测单位联系人',
-        dataIndex:'contactPerson',
-        align:'center',
-    },{
-        title:'被检测单位联系人电话',
-        dataIndex:'contactPersonTel',
-        align:'center',
-    },{
-        title:'GPS地址',
-        dataIndex:'GPS',
-        align:'center',
-    },{
-        title:'详情',
-        dataIndex:'details',
-        render:(text)=><a href="javascript:;">查看详情</a>
-    }];
 const dateFormat = 'YYYY/MM/DD';
 class List extends Component{
     constructor(props){
@@ -63,7 +19,7 @@ class List extends Component{
             loading:true,
             measurePerson:null,
             address:null,
-       
+
             
         }
         this.startTime=null;
@@ -79,6 +35,10 @@ class List extends Component{
     }
     searchMessageWithData=()=>{
         
+    }
+    toDetail(data) {
+        let obj = JSON.stringify(data)
+        localStorage.setItem('tableObj', obj)
     }
     getListInfo=()=>{
         var json={};
@@ -146,6 +106,52 @@ class List extends Component{
         this.getListInfo();
     }
     render(){
+        let self = this
+        const columns=[{
+            title:'测量人',
+            dataIndex:'measurePerson',
+            align:'center',
+        },{
+            title:'仪器型号和编号',
+            dataIndex:'machineNO',
+            align:'center',
+        },{
+            title:'任务编号',
+            dataIndex:'taskNO',
+            align:'center',
+        },{
+            title:'测量时间',
+            dataIndex:'measuredAt',
+            align:'center',
+        },{
+            title:'检查类别',
+            dataIndex:'type',
+            align:'center',
+        },{
+            title:'天气状况',
+            dataIndex:'weather',
+            align:'center',
+        },{
+            title:'测量地址',
+            dataIndex:'address',
+            align:'center',
+        },{
+            title:'被检测单位联系人',
+            dataIndex:'contactPerson',
+            align:'center',
+        },{
+            title:'被检测单位联系人电话',
+            dataIndex:'contactPersonTel',
+            align:'center',
+        },{
+            title:'GPS地址',
+            dataIndex:'GPS',
+            align:'center',
+        },{
+            title:'详情',
+            dataIndex:'details',
+            render:(text, record, index)=><Link to="/home" onClick={() => self.toDetail(record)}>查看详情</Link>
+        }]
         return(
             <div >
                 <Bcrumb title="数据展示" icon="user"></Bcrumb>

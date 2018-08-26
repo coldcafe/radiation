@@ -28,24 +28,16 @@ class Main extends Component {
              width: 0,
              height: 0,
              imgStyle: {},
-             isShowCanvas: false
+             isShowCanvas: false,
+             dataInfo: {},
+             currentUrl: ''
         };
     }
-    json={
-        measurePerson:'小白',
-        machineNO:'测试机器a',
-        taskNO:'12345678',
-        measuredAt:'18-01-18',
-        type:'类型A',
-        weather:'良好',
-        address:'深圳市福田中心莲花一村',
-        contactPerson:'深圳普瑞升科技有限公司',
-        contactPersonTel:'15889563342',
-        GPS:'154，188',
-        details:'查看详情',
-    }
-    componentDidMount(){
-        console.log()
+    componentWillMount(){
+        let data = localStorage.getItem('tableObj')
+        this.setState({
+            dataInfo: JSON.parse(data)
+        })
     }
     next() {
         const current = this.state.current + 1;
@@ -59,8 +51,11 @@ class Main extends Component {
         console.log(Config.localKey.userToken);
         console.log('token'+Config.localItem(Config.localKey.userToken));
     }
-    showImageModal(){
-        this.setState({previewVisible: true})
+    showImageModal(url){
+        this.setState({
+            previewVisible: true,
+            currentUrl: url
+        })
     }
 
     cancelModal() {
@@ -96,16 +91,16 @@ class Main extends Component {
             <Row>
             	<Col span={24}>
                     <Card  title="基本信息"  bordered={false} className="mg-top20">
-                        <BaseInfoComponent  data={this.json}/>
+                        <BaseInfoComponent  data={this.state.dataInfo}/>
                     </Card> 
                     <Card title="测量数据" bordered={true} className="mg-top20">
-                       <DataTable data={[]} ></DataTable>
+                       <DataTable data={this.state.dataInfo} ></DataTable>
                     </Card> 
                     <Card title="点位示意图" bordered={true} className="mg-top20">
                         <div className="point_pic">
-                            <img src={require("../../image/girl.jpg")} alt="" style={{width: '300px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
+                            <img src={require("../../image/girl.jpg")} alt="" style={{width: '300px', height: 'auto'}} onClick={()=>{this.showImageModal(require("../../image/girl.jpg"))}}/>
                             <Modal visible={this.state.previewVisible} footer={null} onCancel={() => {this.cancelModal()}}>
-                                <img alt="example" style={{ width: '100%' }} src={require("../../image/girl.jpg")} />
+                                <img alt="example" style={{ width: '100%' }} src={this.state.currentUrl} />
                             </Modal>
                         </div>
                         <div>
@@ -117,31 +112,15 @@ class Main extends Component {
                     </Card>
                     <Card title="照片" bordered={true} className="mg-top20">
                         <div className="pic-wall-container">
-                            <ul className="pic-container" style={{width: 215*8+'px'}}>
-                                <li className="pic-wall">
-                                    <img src={require("../../image/girl.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
-                                </li>
-                                <li className="pic-wall">
-                                    <img src={require("../../image/1.jpg")} alt="" onClick={()=>{this.showImageModal()}}/>
-                                </li>
-                                <li className="pic-wall">
-                                    <img src={require("../../image/2.jpg")} alt="" onClick={()=>{this.showImageModal()}}/>
-                                </li>
-                                <li className="pic-wall">
-                                    <img src={require("../../image/3.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
-                                </li>
-                                <li className="pic-wall">
-                                    <img src={require("../../image/4.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
-                                </li>
-                                <li className="pic-wall">
-                                    <img src={require("../../image/1.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
-                                </li>
-                                <li className="pic-wall">
-                                    <img src={require("../../image/2.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
-                                </li>
-                                <li className="pic-wall">
-                                    <img src={require("../../image/3.jpg")} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal()}}/>
-                                </li>
+                            <ul className="pic-container" style={{width: 215*this.state.dataInfo.pictures.length+'px'}}>
+                                
+                                {this.state.dataInfo.pictures.map( item => {
+                                    return (
+                                        <li className="pic-wall">
+                                            <img src={item} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal(item)}}/>
+                                        </li>
+                                    )
+                                })}
                             </ul>
                         </div>
                     </Card>

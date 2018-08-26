@@ -76,7 +76,7 @@ class MyCanvas extends Component{
             });
             // 变化canvas的长宽会导致画布重新生成，重新填充画布的内容
             let popData = this.state.preDrawAry[this.state.preDrawAry.length - 1];
-            this.state.cxt.putImageData(popData,0,0);
+            this.state.cxt && this.state.cxt.putImageData(popData,0,0);
         }
     };
 
