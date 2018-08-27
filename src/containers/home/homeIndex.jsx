@@ -29,15 +29,15 @@ class Main extends Component {
              height: 0,
              imgStyle: {},
              isShowCanvas: false,
-             dataInfo: {},
              currentUrl: ''
         };
+
+        this.dataInfo = {}
     }
-    componentWillMount(){
-        let data = localStorage.getItem('tableObj')
-        this.setState({
-            dataInfo: JSON.parse(data)
-        })
+    componentWillMount() {
+        this.dataInfo = JSON.parse(localStorage.getItem('tableObj'))
+        console.log(this.dataInfo);
+        
     }
     next() {
         const current = this.state.current + 1;
@@ -91,10 +91,10 @@ class Main extends Component {
             <Row>
             	<Col span={24}>
                     <Card  title="基本信息"  bordered={false} className="mg-top20">
-                        <BaseInfoComponent  data={this.state.dataInfo}/>
+                        <BaseInfoComponent  data={this.dataInfo}/>
                     </Card> 
                     <Card title="测量数据" bordered={true} className="mg-top20">
-                       <DataTable data={this.state.dataInfo} ></DataTable>
+                       <DataTable data={this.dataInfo} ></DataTable>
                     </Card> 
                     <Card title="点位示意图" bordered={true} className="mg-top20">
                         <div className="point_pic">
@@ -112,9 +112,9 @@ class Main extends Component {
                     </Card>
                     <Card title="照片" bordered={true} className="mg-top20">
                         <div className="pic-wall-container">
-                            <ul className="pic-container" style={{width: 215*this.state.dataInfo.pictures.length+'px'}}>
+                            <ul className="pic-container" style={{width: 215*this.dataInfo.pictures.length+'px'}}>
                                 
-                                {this.state.dataInfo.pictures.map( item => {
+                                {this.dataInfo.pictures.map( item => {
                                     return (
                                         <li className="pic-wall">
                                             <img src={item} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal(item)}}/>

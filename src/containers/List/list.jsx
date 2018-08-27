@@ -17,7 +17,7 @@ class List extends Component{
             length:null,
             dataSource:{},
             loading:true,
-            measurePerson:null,
+            mesurePerson:null,
             address:null,
 
             
@@ -50,6 +50,9 @@ class List extends Component{
         }
         if(this.state.address){
             json.address=this.state.address;
+        }
+        if(this.state.mesurePerson){
+            json.username=this.state.mesurePerson;
         }
         if(this.limit){
             json.limit=this.limit;
@@ -208,6 +211,7 @@ class List extends Component{
                             this.page=page;
                             this.getListInfo();
                         }}
+                        style={{marginTop: 20}}
                     />
                 </Spin>
                 
