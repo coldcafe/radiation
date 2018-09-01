@@ -62,7 +62,7 @@ export const goLogin = (params) => {
             if(res){
                 dispatch(getToken(res.token));
                 Config.localItem(Config.localKey.userToken,res.token);
-                browserHistory.push('/home');
+                browserHistory.push('/List/list');
             }else{
                 Message.error('系统错误');
 

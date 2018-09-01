@@ -19,7 +19,7 @@ export class Bcrumb extends Component {
 		return (
 			<Breadcrumb className="bread-crumb">
                 <Breadcrumb.Item>
-                    <Link to="/home"><Icon type="home" /><span>主页</span></Link>
+                    {/* <Link to="/home"><Icon type="home" /><span>主页</span></Link> */}
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                     <Icon type={this.props.icon ? this.props.icon : 'laptop'} /><span>{ this.props.title }</span>
