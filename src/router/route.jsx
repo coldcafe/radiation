@@ -84,6 +84,12 @@ const user = (location, cb) => {
     }, 'user');
 }
 
+const imageManage=(location,cb)=>{
+    require.ensure([],require=>{
+        cb(null,require('../containers/imageManage/index').default)
+    },'imageManage');
+}
+
 // 系统设置
 const setting = (location, cb) => {
     require.ensure([], require => {
@@ -130,6 +136,7 @@ const RouteConfig = (
 			<IndexRoute getComponent={list} onEnter={requireAuth} /> 
             <Route path='/List/list' getComponent={list} onEnter={requireAuth}/>
             <Route path="/home" getComponent={home} onEnter={requireAuth} /> 
+            <Route path='/imageManage/index' getComponent={imageManage} onEnter={requireAuth}/>
             <Route path="/chart/line" getComponent={chartLine} onEnter={requireAuth} />
 			<Route path="/general/button" getComponent={button} onEnter={requireAuth} />
 			<Route path="/general/icon" getComponent={icon} onEnter={requireAuth} />

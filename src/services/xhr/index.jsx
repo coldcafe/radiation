@@ -85,7 +85,6 @@ Tool.ajax = function (mySetting) {
     xhr.end = function () {
         xhr.removeEventListener('readystatechange', httpEnd, false);
     }
-
     function filter(str) { //特殊字符转义
         str += ''; //隐式转换
         str = str.replace(/%/g, '%25');
