@@ -154,10 +154,10 @@ class Main extends Component {
 							this.pushtoRegister();
 						}}
 					>
-						<div style={{width:300,height:200}}>
+						<div className="ipt-addUser">
 							<Row>
-								<div span={4}>用户名</div>
-								<Col span={8}>
+								<Col span={4}>用户名</Col>
+								<Col span={12}>
 									<Input 
 										value={this.state.registerName}
 										onChange={this.onChangeregisterName}
@@ -166,7 +166,7 @@ class Main extends Component {
 							</Row>
 							<Row>
 								<Col span={4}>密码</Col>
-								<Col span={8}>
+								<Col span={12}>
 									<Input 
 										value={this.state.registerPassword}
 										onChange={this.onChangeegisterPassword}
