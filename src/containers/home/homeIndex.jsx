@@ -13,7 +13,7 @@ import Config from '../../config/index';
 import { Bcrumb } from '../../component/bcrumb/bcrumb';
 import BaseInfoComponent from './baseinfo';
 import DataTable from './dataTable';
-import MyCanvas from './mycanvas';
+// import MyCanvas from './mycanvas';
 
 const Step = Steps.Step;
 
@@ -35,9 +35,7 @@ class Main extends Component {
         this.dataInfo = {}
     }
     componentWillMount() {
-        this.dataInfo = JSON.parse(localStorage.getItem('tableObj'))
-        console.log(this.dataInfo);
-        
+        this.dataInfo = JSON.parse(localStorage.getItem('tableObj'))        
     }
     next() {
         const current = this.state.current + 1;
@@ -64,12 +62,12 @@ class Main extends Component {
         })
     }
 
-    setCanvas = () => {
-        let flag = !this.state.isShowCanvas
-        this.setState({
-            isShowCanvas: flag
-        })
-    }
+    // setCanvas = () => {
+    //     let flag = !this.state.isShowCanvas
+    //     this.setState({
+    //         isShowCanvas: flag
+    //     })
+    // }
     
 
 	render() { 
@@ -104,12 +102,12 @@ class Main extends Component {
                             </Modal>
                         </div>
                         <div>
-                            <Button onClick={this.setCanvas}>编辑</Button>
+                            <Button>编辑</Button>
                         </div>
                     </Card>
-                    <Card style={{display: this.state.isShowCanvas?'block':'none'}}>
+                    {/* <Card style={{display: this.state.isShowCanvas?'block':'none'}}>
                         <MyCanvas/>
-                    </Card>
+                    </Card> */}
                     <Card title="照片" bordered={true} className="mg-top20">
                         <div className="pic-wall-container">
                             <ul className="pic-container" style={{width: 215*this.dataInfo.pictures.length+'px'}}>

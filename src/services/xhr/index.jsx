@@ -40,11 +40,16 @@ Tool.ajax = function (mySetting) {
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded",);
             xhr.setRequestHeader("Authorization",Config.localItem(Config.localKey.userToken));
             xhr.send();
-        } else { //post方式请求
+        } else if(setting.type == 'POST') { //post方式请求
             xhr.open(setting.type, setting.url, setting.async);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded",);
             xhr.setRequestHeader("Authorization",Config.localItem(Config.localKey.userToken));
             xhr.send(sData);
+        } else if(setting.type == 'PUT'){
+            xhr.open(setting.type, setting.url, setting.async);
+            xhr.setRequestHeader("Content-type", "application/json",);
+            xhr.setRequestHeader("Authorization",Config.localItem(Config.localKey.userToken));
+            xhr.send(JSON.stringify(setting.data));
         }
     } catch (e) {
         return httpEnd();
@@ -143,6 +148,24 @@ Tool.post = function (pathname, data, success, error) {
     var setting = {
         url: target + pathname, //默认ajax请求地址
         type: 'POST', //请求的方式
+        data: data, //发给服务器的数据
+        success: success|| function (text) { }, //请求成功执行方法
+        error: error|| function (text) { }, //请求失败执行方法
+    };
+    return Tool.ajax(setting);
+};
+
+/**
+ * 封装ajax put请求
+ * @param {string} pathname 服务器请求地址
+ * @param {object} data     发送给服务器的数据
+ * @param {function} success  请求成功执行方法
+ * @param {function} error    请求失败执行方法
+ */
+Tool.post = function (pathname, data, success, error) {
+    var setting = {
+        url: target + pathname, //默认ajax请求地址
+        type: 'PUT', //请求的方式
         data: data, //发给服务器的数据
         success: success|| function (text) { }, //请求成功执行方法
         error: error|| function (text) { }, //请求失败执行方法

@@ -30,6 +30,10 @@ class LoginService {
         return Xhr.get('/reports/list',params,success,fail);
     }
 
+    updatereportslist(params,success,fail){
+        return Xhr.post('/reports',params,success,fail);
+    }
+
 }
 
 // 实例化再导出
