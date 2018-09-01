@@ -162,7 +162,7 @@ Tool.post = function (pathname, data, success, error) {
  * @param {function} success  请求成功执行方法
  * @param {function} error    请求失败执行方法
  */
-Tool.post = function (pathname, data, success, error) {
+Tool.put = function (pathname, data, success, error) {
     var setting = {
         url: target + pathname, //默认ajax请求地址
         type: 'PUT', //请求的方式
