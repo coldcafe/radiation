@@ -3,18 +3,17 @@ import pureRender from 'pure-render-decorator';
 import { is, fromJS} from 'immutable';
 import { Router, Route, IndexRoute, browserHistory, History, Link } from 'react-router';
 import { connect } from 'react-redux';
-import { Icon, Row, Col, Card, Steps, Button, message,Input, Modal, Carousel } from 'antd';
+import { Icon, Row, Col, Card, Steps, Button, message,Input, Modal, Carousel,Breadcrumb } from 'antd';
 const { TextArea } = Input;
 //import styles from './style/home.less';
 require('./style/home.less');
 import Config from '../../config/index';
 
 // 公共面包屑
-import { Bcrumb } from '../../component/bcrumb/bcrumb';
+import Bcrumb  from '../../component/bcrumb/bcrumb';
 import BaseInfoComponent from './baseinfo';
 import DataTable from './dataTable';
 import MyCanvas from './mycanvas';
-
 const Step = Steps.Step;
 
 
@@ -87,7 +86,8 @@ class Main extends Component {
         const { current } = this.state;
 		return (
         <div className="home-container">
-            <Bcrumb title="快速入门" />
+            {/* <Breadcrumb title="数据详情" historyroute="/List/list" historyTitle='数据展示'/>  */}
+            <Bcrumb title="数据详情" historyTitle={'数据展示'} historyroute={'/List/list'}></Bcrumb>
             <Row>
             	<Col span={24}>
                     <Card  title="基本信息"  bordered={false} className="mg-top20">

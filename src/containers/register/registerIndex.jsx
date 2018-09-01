@@ -152,12 +152,6 @@ class Register extends React.Component{
                             }
                         </FormItem>
                         <FormItem {...tailFormItemLayout}>
-                            {getFieldDecorator('agreement', {
-                                valuePropName: 'checked',
-                                })(<Checkbox>I have read the <a href="">agreement</a></Checkbox>)
-                            }
-                        </FormItem>
-                        <FormItem {...tailFormItemLayout}>
                             <Button type="primary" htmlType="submit">注册</Button>
                         </FormItem>
                     </Form>

@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import { Bcrumb } from '../../component/bcrumb/bcrumb';
 import { Table,Spin ,Pagination,DatePicker,Input, Button} from 'antd';
 import LoginService from '../../services/loginService';
 import styles from './style/list.less';
@@ -8,6 +7,9 @@ import moment from 'moment';
 import { stringify } from 'querystring';
 import { BrowerRouter as Router, Route, Link} from 'react-router'
 const RangePicker = DatePicker.RangePicker;
+import LevelBcrumb from '../../component/bcrumb/level1Bcrumb';
+
+
 
 const dateFormat = 'YYYY/MM/DD';
 class List extends Component{
@@ -25,7 +27,7 @@ class List extends Component{
         this.startTime=null;
         this.endTime=null;
         this.page=1;
-        this.limit=2;
+        this.limit=10;
     }
     componentDidMount(){
         this.getListInfo();
@@ -156,8 +158,9 @@ class List extends Component{
             render:(text, record, index)=><Link to="/home" onClick={() => self.toDetail(record)}>查看详情</Link>
         }]
         return(
+            // icon="user"
             <div >
-                <Bcrumb title="数据展示" icon="user"></Bcrumb>
+                <LevelBcrumb title="数据展示"/>
                 <Spin 
                     size={'large'}
                     spinning={true}
@@ -205,7 +208,7 @@ class List extends Component{
                     <Pagination 
                         defaultCurrent={1} 
                         total={this.state.dataSource.count} 
-                        pageSize={2}
+                        pageSize={10}
                         current={this.page}
                         onChange={(page,pageSize)=>{
                             this.page=page;
