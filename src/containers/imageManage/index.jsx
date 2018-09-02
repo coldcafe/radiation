@@ -1,7 +1,7 @@
 import React ,{Component} from 'react';
 import LevelBcrumb from '../../component/bcrumb/level1Bcrumb';
-
-class ImageManage extends Component{
+import {Button,Upload,}  from 'antd';
+ class ImageManage extends Component{
     constructor(props) {
         super(props)
         this.state = {
