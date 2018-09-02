@@ -3,7 +3,7 @@ import pureRender from 'pure-render-decorator';
 import { is, fromJS} from 'immutable';
 import { Router, Route, IndexRoute, browserHistory, History, Link } from 'react-router';
 import { connect } from 'react-redux';
-import { Icon, Row, Col, Card, Steps, Button, message,Input, Modal, Carousel,Breadcrumb } from 'antd';
+import { Icon, Row, Col, Card, Steps, Button, Message, message,Input, Modal, Carousel,Breadcrumb } from 'antd';
 const { TextArea } = Input;
 //import styles from './style/home.less';
 require('./style/home.less');
@@ -13,6 +13,7 @@ import Config from '../../config/index';
 import Bcrumb  from '../../component/bcrumb/bcrumb';
 import BaseInfoComponent from './baseinfo';
 import DataTable from './dataTable';
+import LoginService from '../../services/loginService';
 import MyCanvas from './mycanvas';
 // import MyCanvas from './mycanvas';
 
@@ -30,7 +31,8 @@ class Main extends Component {
              height: 0,
              imgStyle: {},
              isShowCanvas: false,
-             currentUrl: ''
+             currentUrl: '',
+             pictures: [] 
         };
 
         this.dataInfo = {}
@@ -57,10 +59,35 @@ class Main extends Component {
         })
     }
 
+    getAllPointPic() {
+        LoginService.getListsketchmap(null,(response)=>{
+            this.setState({
+                pictures:response,
+            });
+          
+        },(error)=>{
+
+            console.log(error);
+        })
+    }
+
     cancelModal() {
         this.setState({
             previewVisible: false
         })
+    }
+
+    sketchMapApply = (val) => {
+        this.dataInfo.sketchMap = val
+        LoginService.updatereportslist(this.dataInfo,(response)=>{
+            
+            Message.success('替换点位示意图成功！')
+            localStorage.setItem('tableObj', JSON.stringify(response))
+        },(error)=>{
+            console.log('error==='+ JSON.stringify(error));
+            Message.error('替换点位示意图失败！')
+            this.dataInfo = JSON.parse(localStorage.getItem('tableObj'))
+        });
     }
 
     // setCanvas = () => {
@@ -98,7 +125,7 @@ class Main extends Component {
                     </Card> 
                     <Card title="点位示意图" bordered={true} className="mg-top20">
                         <div className="point_pic">
-                            <img src={require("../../image/girl.jpg")} alt="" style={{width: '300px', height: 'auto'}} onClick={()=>{this.showImageModal(require("../../image/girl.jpg"))}}/>
+                            <img src={this.dataInfo.sketchMap} alt="" style={{width: '300px', height: 'auto'}} onClick={()=>{this.showImageModal(this.dataInfo.sketchMap)}}/>
                             <Modal visible={this.state.previewVisible} footer={null} onCancel={() => {this.cancelModal()}}>
                                 <img alt="example" style={{ width: '100%' }} src={this.state.currentUrl} />
                             </Modal>
@@ -106,10 +133,11 @@ class Main extends Component {
                         <div className="pic-wall-container">
                             <ul className="pic-container" style={{width: 215*this.dataInfo.pictures.length+'px'}}>
                                 
-                                {this.dataInfo.pictures.map( item => {
+                                {this.state.pictures.map( item => {
                                     return (
                                         <li className="pic-wall">
                                             <img src={item} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal(item)}}/>
+                                            <Button className="point-btn" onClick={() => this.sketchMapApply(item)}>应用</Button>
                                         </li>
                                     )
                                 })}

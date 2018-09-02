@@ -3,7 +3,6 @@ import LevelBcrumb from '../../component/bcrumb/level1Bcrumb';
 import {Button,Upload,message}  from 'antd';
 require('./style/index.less');
 import LoginService from '../../services/loginService';
-import loginService from '../../services/loginService';
 import { resolve } from 'url';
 
 
@@ -59,8 +58,7 @@ import { resolve } from 'url';
                         <Button type="upload">上传点位示意图</Button>
                     </Upload>
                 </div>
-                <div>
-                 <div className="pic-wall-container">
+                <div className="pic-wall-container">
                     <ul className="pic-container">
                         {this.state.pictures.map((item, index) => {
                             console.log(item);
@@ -71,7 +69,6 @@ import { resolve } from 'url';
                             )
                         })}
                     </ul>
-                </div>
                 </div>
              </view>
         );

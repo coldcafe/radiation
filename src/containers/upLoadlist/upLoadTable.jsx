@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Table, Row, Col, Modal, Form, Button, Input, Message } from 'antd';
 import LoginService from '../../services/loginService';
-
-
 const FormItem = Form.Item
-export default class DataTable extends Component {
+export default class upLoadTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -101,7 +99,7 @@ export default class DataTable extends Component {
 
     }
     render() {
-        const dataArrList = this.state.data.data
+        const dataArrList = this.state.data.data?this.state.data.data:[];
         return (
             <div>
                 {
@@ -138,9 +136,6 @@ export default class DataTable extends Component {
                                     <Col span={4}>{dataArr[12]}</Col>
                                     <Col span={2} className="table-operate"></Col>
                                 </Row>
-
-                                
-
                             </div>
                         )
                     })

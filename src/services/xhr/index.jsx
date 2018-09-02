@@ -42,9 +42,9 @@ Tool.ajax = function (mySetting) {
             xhr.send();
         } else if(setting.type == 'POST') { //post方式请求
             xhr.open(setting.type, setting.url, setting.async);
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded",);
+            xhr.setRequestHeader("Content-type", "application/json",);
             xhr.setRequestHeader("Authorization",Config.localItem(Config.localKey.userToken));
-            xhr.send(sData);
+            xhr.send(JSON.stringify(setting.data));
         } else if(setting.type == 'PUT'){
             xhr.open(setting.type, setting.url, setting.async);
             xhr.setRequestHeader("Content-type", "application/json",);

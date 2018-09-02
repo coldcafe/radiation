@@ -73,6 +73,13 @@ export class Lmenu extends Component {
 									<span className='nav-text'>视图模版</span>
 								</Link>
 								</Menu.Item>
+
+								<Menu.Item key='Uploadlist'>
+								<Link to='/upLoadlist/index'>
+									<Icon type="laptop"/>
+									<span className='nav-text'>上传数据</span>
+								</Link>
+								</Menu.Item>
 	        </Menu>
 		)
 	}

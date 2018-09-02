@@ -90,6 +90,12 @@ const imageManage=(location,cb)=>{
     },'imageManage');
 }
 
+const Uploadlist=(location,cb)=>{
+    require.ensure([],require=>{
+        cb(null,require('../containers/upLoadlist/index').default)
+    },'Uploadlist')
+}
+
 // 系统设置
 const setting = (location, cb) => {
     require.ensure([], require => {
@@ -137,6 +143,7 @@ const RouteConfig = (
             <Route path='/List/list' getComponent={list} onEnter={requireAuth}/>
             <Route path="/home" getComponent={home} onEnter={requireAuth} /> 
             <Route path='/imageManage/index' getComponent={imageManage} onEnter={requireAuth}/>
+            <Route path='/upLoadlist/index' getComponent={Uploadlist} onEnter={requireAuth}/>
             <Route path="/chart/line" getComponent={chartLine} onEnter={requireAuth} />
 			<Route path="/general/button" getComponent={button} onEnter={requireAuth} />
 			<Route path="/general/icon" getComponent={icon} onEnter={requireAuth} />

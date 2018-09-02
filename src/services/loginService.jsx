@@ -33,6 +33,10 @@ class LoginService {
     updatereportslist(params,success,fail){
         return Xhr.post('/reports',params,success,fail);
     }
+    //创建一条数据
+    creatreportslist(params,success,fail){
+        return Xhr.post('/reports/upload',params,success,fail);
+    }  
 
     //上传点位示意图模版
     upLoadsketchmap(param,success,fail){
