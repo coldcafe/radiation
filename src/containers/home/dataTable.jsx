@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Row, Col, Modal, Form, Button, Input } from 'antd';
+import { Table, Row, Col, Modal, Form, Button, Input, Message } from 'antd';
 import LoginService from '../../services/loginService';
 
 
@@ -68,10 +68,11 @@ export default class DataTable extends Component {
                 currentRow: [],
                 tmpData: []
             })
-
+            Message.success('编辑测量数据成功！')
             localStorage.setItem('tableObj', JSON.stringify(response))
         },(error)=>{
             console.log('error==='+ JSON.stringify(error));
+            Message.error('编辑测量数据失败！')
             let data = JSON.parse(localStorage.getItem('tableObj'))
             this.setState({
                 data: data,
