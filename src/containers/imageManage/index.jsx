@@ -5,17 +5,20 @@ import {Button,Upload,}  from 'antd';
     constructor(props) {
         super(props)
         this.state = {
-            
         }
     }
     render() {
         return (
              <view>
                  <LevelBcrumb title="视图模版"/>
-                 <text>点位示意图模版</text>
+                <div>
+                    <text>上传按钮</text>
+                </div>
+                <div>
+                    <text>图片展示</text>
+                </div>
              </view>
         );
     }
 }
-
 export default ImageManage;
