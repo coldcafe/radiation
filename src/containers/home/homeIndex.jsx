@@ -103,13 +103,19 @@ class Main extends Component {
                                 <img alt="example" style={{ width: '100%' }} src={this.state.currentUrl} />
                             </Modal>
                         </div>
-                        <div>
-                            <Button>编辑</Button>
+                        <div className="pic-wall-container">
+                            <ul className="pic-container" style={{width: 215*this.dataInfo.pictures.length+'px'}}>
+                                
+                                {this.dataInfo.pictures.map( item => {
+                                    return (
+                                        <li className="pic-wall">
+                                            <img src={item} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal(item)}}/>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
                         </div>
                     </Card>
-                    {/* <Card style={{display: this.state.isShowCanvas?'block':'none'}}>
-                        <MyCanvas/>
-                    </Card> */}
                     <Card title="照片" bordered={true} className="mg-top20">
                         <div className="pic-wall-container">
                             <ul className="pic-container" style={{width: 215*this.dataInfo.pictures.length+'px'}}>
@@ -136,37 +142,6 @@ class Main extends Component {
                             <Button className="word-btn" size="large">生成word文档</Button>
                         </div>
                     </Card>
-                    {/* <Card title="项目上手" className="mg-top20">
-                        <Steps current={current}>
-                          {steps.map(item => <Step key={item.title} title={item.title} />)}
-                        </Steps>
-                        <div className="steps-content" dangerouslySetInnerHTML={{__html: steps[this.state.current].content}}></div>
-                        <div className="steps-action">
-                          {
-                            this.state.current < steps.length - 1
-                            &&
-                            <Button type="primary" onClick={() => this.next()}>下一步</Button>
-                          }
-                          {
-                            this.state.current === steps.length - 1
-                            &&
-                            <Button type="primary" onClick={() => message.success('恭喜您，大牛!')}>完成</Button>
-                          }
-                          {
-                            this.state.current > 0
-                            &&
-                            <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
-                              上一步
-                            </Button>
-                          }
-                        </div>
-                    </Card> 
-                    <Card title="访问" className="mg-top20">
-                        <p>在浏览器地址栏输入http://127.0.0.1:8888</p>
-                    </Card> 
-                    <Card title="项目说明" className="mg-top20">
-                        <p>此项目是本人空余时间搭建的。希望大家提供宝贵的意见和建议，谢谢。</p>
-                    </Card>  */}
                 </Col>
             </Row>
         </div>	

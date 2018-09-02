@@ -34,6 +34,17 @@ class LoginService {
         return Xhr.post('/reports',params,success,fail);
     }
 
+    //上传点位示意图模版
+    upLoadsketchmap(param,success,fail){
+        return Xhr.post('/reports/sketchmap',param,success,fail);
+    }
+
+    getListsketchmap(param,success,fail){
+        return Xhr.get('/reports/sketchmap/list',param,success,fail);
+    }
+    deleteSketchmap(pam,success,fail){
+        return Xhr.delete('/reports/sketchmap/',param,success,fail);
+    }
 }
 
 // 实例化再导出
