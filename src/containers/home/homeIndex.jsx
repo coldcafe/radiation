@@ -79,7 +79,7 @@ class Main extends Component {
     }
 
     sketchMapApply = (val) => {
-        this.dataInfo.sketchMap = val
+        this.dataInfo.pic = val
         LoginService.updatereportslist(this.dataInfo,(response)=>{
             
             Message.success('替换点位示意图成功！')
@@ -142,8 +142,8 @@ class Main extends Component {
                                 {this.state.pictures.map( item => {
                                     return (
                                         <li className="pic-wall">
-                                            <img src={item} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal(item)}}/>
-                                            <Button className="point-btn" onClick={() => this.sketchMapApply(item)}>应用</Button>
+                                            <img src={item.pic} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal(item.pic)}}/>
+                                            <Button className="point-btn" onClick={() => this.sketchMapApply(item.pic)}>应用</Button>
                                         </li>
                                     )
                                 })}

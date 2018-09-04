@@ -95,7 +95,6 @@ export default class Basis extends Component{
                         <Col span={10}>
                             <DatePicker
                                 onChange={this.onchangeDatePicker}
-                                style={{marginRight: '4px'}}
                             />
                             <TimePicker
                                 onChange={this.onchangeTimePicker}
