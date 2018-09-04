@@ -46,8 +46,12 @@ class LoginService {
     getListsketchmap(param,success,fail){
         return Xhr.get('/reports/sketchmap/list',param,success,fail);
     }
-    deleteSketchmap(pam,success,fail){
+    deleteSketchmap(param,success,fail){
         return Xhr.delete('/reports/sketchmap/',param,success,fail);
+    }
+    //下载doc 文档
+    downLoadWordOffice(param,success,fail){
+        return Xhr.get('/reports/export/id',param,success,fail);
     }
 }
 
