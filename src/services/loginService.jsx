@@ -1,5 +1,6 @@
 import Xhr from './xhr/index';
 
+
 /**
  * 封装ajax请求
  * @param {any}
@@ -31,7 +32,7 @@ class LoginService {
     }
 
     updatereportslist(params,success,fail){
-        return Xhr.post('/reports',params,success,fail);
+        return Xhr.put('/reports',params,success,fail);
     }
     //创建一条数据
     creatreportslist(params,success,fail){
@@ -39,19 +40,19 @@ class LoginService {
     }  
 
     //上传点位示意图模版
-    upLoadsketchmap(param,success,fail){
-        return Xhr.post('/reports/sketchmap',param,success,fail);
+    upLoadsketchmap(params,success,fail){
+        return Xhr.post('/reports/sketchmap',params,success,fail);
     }
 
-    getListsketchmap(param,success,fail){
-        return Xhr.get('/reports/sketchmap/list',param,success,fail);
+    getListsketchmap(params,success,fail){
+        return Xhr.get('/reports/sketchmap/list',params,success,fail);
     }
-    deleteSketchmap(param,success,fail){
-        return Xhr.delete('/reports/sketchmap/',param,success,fail);
+    deleteSketchmap(params,success,fail){
+        return Xhr.delete('/reports/sketchmap/',params,success,fail);
     }
     //下载doc 文档
-    downLoadWordOffice(param,success,fail){
-        return Xhr.get('/reports/export/id',param,success,fail);
+    downLoadWordOffice(params,success,fail){
+        return Xhr.down('/reports/export/'+params,'',success,fail);
     }
 }
 

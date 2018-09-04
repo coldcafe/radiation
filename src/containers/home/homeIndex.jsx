@@ -4,7 +4,9 @@ import { is, fromJS} from 'immutable';
 import { Router, Route, IndexRoute, browserHistory, History, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { Icon, Row, Col, Card, Steps, Button, Message, message,Input, Modal, Carousel,Breadcrumb } from 'antd';
+ import axios from 'axios';
 const { TextArea } = Input;
+
 //import styles from './style/home.less';
 require('./style/home.less');
 import Config from '../../config/index';
@@ -32,13 +34,17 @@ class Main extends Component {
              imgStyle: {},
              isShowCanvas: false,
              currentUrl: '',
-             pictures: [] 
+             pictures: [],
+             result:'',
         };
 
         this.dataInfo = {}
     }
     componentWillMount() {
-        this.dataInfo = JSON.parse(localStorage.getItem('tableObj'))        
+        this.dataInfo = JSON.parse(localStorage.getItem('tableObj'))   
+        this.setState({
+            result:this.dataInfo.result,
+        });
     }
     next() {
         const current = this.state.current + 1;
@@ -66,7 +72,6 @@ class Main extends Component {
             });
           
         },(error)=>{
-
             console.log(error);
         })
     }
@@ -80,7 +85,6 @@ class Main extends Component {
     sketchMapApply = (val) => {
         this.dataInfo.sketchMap = val
         LoginService.updatereportslist(this.dataInfo,(response)=>{
-            
             Message.success('替换点位示意图成功！')
             localStorage.setItem('tableObj', JSON.stringify(response))
         },(error)=>{
@@ -89,33 +93,44 @@ class Main extends Component {
             this.dataInfo = JSON.parse(localStorage.getItem('tableObj'))
         });
     }
-
-    // setCanvas = () => {
-    //     let flag = !this.state.isShowCanvas
-    //     this.setState({
-    //         isShowCanvas: flag
-    //     })
-    // }
     downLoadWordOffice=()=>{
-       // LoginService.downLoadWordOffice()
+        console.log('xxxxxxxxx');
+        axios.get(Config.target+'/reports/export/'+this.dataInfo.id,{
+            responseType:'blob',
+            headers:{'Authorization':Config.localItem(Config.localKey.userToken)}
+        })
+        .then(function (response) {
+         console.log(response);
+         let url = window.URL.createObjectURL(new Blob([response.data]))
+         let link = document.createElement('a')
+         link.style.display = 'none'
+         link.href = url
+         link.setAttribute('download',' 测试.doc');
+         document.body.appendChild(link)
+         link.click()
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+        // LoginService.downLoadWordOffice(this.dataInfo.id,(response)=>{
+        //     console.log('chenggong');
+        //     console.log(response);
+        // },(error)=>{
+        //     console.log('shibai');
+        //     console.log(error);
+        // });
     }
     //保存word 文档数据
     saveWordMessage=()=>{
-        
+         this.dataInfo.result=this.state.result;
+         LoginService.updatereportslist(this.dataInfo,(response)=>{
+            Message.success('结论保存成功');
+            localStorage.setItem('tableObj',JSON.stringify(response));
+         },(error)=>{
+            Message.error('结论保存失败');
+         });
     }
 	render() { 
-        let linkHtml = '<link href="/antd/dist/app.css" rel="stylesheet" />';
-        const steps = [{
-          title: '下载',
-          content: '<p>$&nbsp;&nbsp;&nbsp;git clone</p><p>$&nbsp;&nbsp;&nbsp;git clone https://github.com/sosout/react-antd.git</p><p>$&nbsp;&nbsp;&nbsp;cd react-antd</p>',
-        }, {
-          title: '安装',
-          content: '<p>// 安装前请先确保已安装node和npm</p><p>// 安装成功后,再安装依赖，如果之前有用npm安装过，请先删掉node_modules</p><p>$&nbsp;&nbsp;&nbsp;yarn install</p>',
-        }, {
-          title: '运行',
-          content: '<p>$&nbsp;&nbsp;&nbsp;yarn run dev （正常编译模式，注意：index.html里必须手动引用app.css，<link href="/antd/dist/app.css" rel="stylesheet" />，否则没有样式）</p><p>$&nbsp;&nbsp;&nbsp;yarn run hot （热替换编译模式，注意：热替换模式下index.html里去掉引用app.css）</p><p>$&nbsp;&nbsp;&nbsp;yarn run dist （发布生产版本，对代码进行混淆压缩，提取公共代码，分离css文件）</p>',
-        }];
-        const { current } = this.state;
 		return (
         <div className="home-container">
             {/* <Breadcrumb title="数据详情" historyroute="/List/list" historyTitle='数据展示'/>  */}
@@ -170,7 +185,8 @@ class Main extends Component {
                             autosize={{ minRows: 12 }}
                             rows='6'
                             className="summary-content"
-                            // value={}
+                            value={this.state.result}
+                            onChange={(e)=>{this.setState({result:e.target.value})}}
                         />
                         <div className="summary-btn">
                             <Button className='' size='large' onClick={()=>{this.saveWordMessage()}}>保存数据</Button>

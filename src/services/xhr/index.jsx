@@ -16,7 +16,7 @@ Tool.ajax = function (mySetting) {
         dataType: 'json',
         success: function (text) { }, //请求成功执行方法
         error: function (text) { } //请求失败执行方法
-        
+    
     };
 
     var aData = []; //存储数据
@@ -35,7 +35,13 @@ Tool.ajax = function (mySetting) {
     var xhr = new XMLHttpRequest();
     try {
         if (setting.type == 'GET' || setting.type == 'DELETE') { //get、delete方式请求
-            sData = setting.url + '?' + sData;
+            if(sData){
+                sData = setting.url + '?' + sData;
+            }else{
+                
+                sData=setting.url;
+                console.log(sData);
+            }
             xhr.open(setting.type, sData, setting.async);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded",);
             xhr.setRequestHeader("Authorization",Config.localItem(Config.localKey.userToken));
