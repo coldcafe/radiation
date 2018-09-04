@@ -79,11 +79,14 @@ class List extends Component{
         
     }
     //获取到时间
-    onchangePicker=(message)=>{
-        console.log(message);
+    onchangePicker=(message,timeString)=>{
+        console.log(timeString);
         if(message.length>0){
-            this.startTime=parseInt(message[0].valueOf()/1000);
-            this.endTime=parseInt(message[1].valueOf()/1000) ;
+            var atime=timeString[0]+' 00:00:00';
+            var btime=timeString[1]+' 00:00:00';
+            this.startTime=(new Date(atime))/1000;
+            this.endTime=(new Date(btime))/1000;
+            console.log(this.startTime,this.endTime);
             this.page=1;
         }else{
             this.startTime=null;
@@ -193,7 +196,7 @@ class List extends Component{
                             <span>时间</span>
                             <RangePicker 
                                 className="search-input"  
-                                onChange={(message)=>{this.onchangePicker(message)}}
+                                onChange={(message,timeString)=>{this.onchangePicker(message,timeString)}}
                                 />
                         </div>
                         <div  className="search-menu">

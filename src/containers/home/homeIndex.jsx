@@ -97,8 +97,13 @@ class Main extends Component {
     //         isShowCanvas: flag
     //     })
     // }
-    
-
+    downLoadWordOffice=()=>{
+       // LoginService.downLoadWordOffice()
+    }
+    //保存word 文档数据
+    saveWordMessage=()=>{
+        
+    }
 	render() { 
         let linkHtml = '<link href="/antd/dist/app.css" rel="stylesheet" />';
         const steps = [{
@@ -166,9 +171,11 @@ class Main extends Component {
                             autosize={{ minRows: 12 }}
                             rows='6'
                             className="summary-content"
+                            // value={}
                         />
                         <div className="summary-btn">
-                            <Button className="word-btn" size="large">生成word文档</Button>
+                            <Button className='' size='large' onClick={()=>{this.saveWordMessage()}}>保存数据</Button>
+                            <Button className="word-btn" size="large" onClick={()=>{this.downLoadWordOffice()}}>生成word文档</Button>
                         </div>
                     </Card>
                 </Col>
