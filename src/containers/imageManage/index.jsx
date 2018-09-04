@@ -1,15 +1,22 @@
 import React ,{Component} from 'react';
 import LevelBcrumb from '../../component/bcrumb/level1Bcrumb';
+<<<<<<< Updated upstream
 import {Button,Upload,message}  from 'antd';
 require('./style/index.less');
 import LoginService from '../../services/loginService';
 import { resolve } from 'url';
 
+=======
+import {Button,Upload,}  from 'antd';
+
+require('./style/index.less')
+>>>>>>> Stashed changes
 
  class ImageManage extends Component{
     constructor(props) {
         super(props)
         this.state = {
+<<<<<<< Updated upstream
             pictures: [],
         }
     }
@@ -27,6 +34,9 @@ import { resolve } from 'url';
            });
         } else if (info.file.status === 'error') {
             message.error('图片上传失败');
+=======
+            pictures: []
+>>>>>>> Stashed changes
         }
     }
     getsketchmap=()=>{
@@ -61,7 +71,6 @@ import { resolve } from 'url';
                 <div className="pic-wall-container">
                     <ul className="pic-container">
                         {this.state.pictures.map((item, index) => {
-                            console.log(item);
                             return (
                                 <li className="pic-wall" key={item.id}>
                                     <img src={item.pic} alt=""/>

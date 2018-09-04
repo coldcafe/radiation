@@ -38,7 +38,8 @@ class Main extends Component {
         this.dataInfo = {}
     }
     componentWillMount() {
-        this.dataInfo = JSON.parse(localStorage.getItem('tableObj'))        
+        this.dataInfo = JSON.parse(localStorage.getItem('tableObj'))
+        this.getAllPointPic()
     }
     next() {
         const current = this.state.current + 1;
@@ -131,7 +132,7 @@ class Main extends Component {
                             </Modal>
                         </div>
                         <div className="pic-wall-container">
-                            <ul className="pic-container" style={{width: 215*this.dataInfo.pictures.length+'px'}}>
+                            <ul className="pic-container" style={{width: 215*this.state.pictures.length+'px'}}>
                                 
                                 {this.state.pictures.map( item => {
                                     return (
