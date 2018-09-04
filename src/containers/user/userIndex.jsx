@@ -17,8 +17,13 @@ const columns=[{
 	dataIndex:'username',
 	align:'center',
 },{
-	title:'昵称',
-	dataIndex:'nickname',
+
+	title:'角色',
+	dataIndex:'Character',
+	align:'center',
+},{
+	title:'编辑',
+	dataIndex:'action',
 	align:'center',
 }];
 /* 以类的方式创建一个组件 */
