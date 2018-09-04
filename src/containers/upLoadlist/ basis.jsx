@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {BUtton,Col,Row,Input,DatePicker,TimePicker,message} from 'antd';
 import { ENFILE } from 'constants';
+require('./style/basis.less')
 
 export default class Basis extends Component{
     constructor(props){
@@ -56,12 +57,12 @@ export default class Basis extends Component{
 
     render() {
         return (
-             <div>
+             <div className="edit-basicInfo">
                  <Row>
                     <Col span={12}>
                         <Row>
-                            <Col span={10}>测量人:</Col>
-                            <Col span={14}>
+                            <Col span={8}>测量人:</Col>
+                            <Col span={10}>
                                 <Input 
                                     value={this.state.measurePerson}
                                     onChange={(e)=>{this.setState({measurePerson:e.target.value})}}
@@ -70,8 +71,8 @@ export default class Basis extends Component{
                         </Row>
                     </Col>
                     <Col span={12}>
-                        <Col span={10}>仪器型号和编号:</Col>
-                        <Col span={14}>
+                        <Col span={8}>仪器型号和编号:</Col>
+                        <Col span={10}>
                             <Input 
                                 value={this.state.machineNO}
                                 onChange={(e)=>{this.setState({machineNO:e.target.value})}}
@@ -81,8 +82,8 @@ export default class Basis extends Component{
                 </Row>
                 <Row>
                     <Col span={12}>
-                        <Col span={10}>任务编号:</Col>
-                        <Col span={14}>
+                        <Col span={8}>任务编号:</Col>
+                        <Col span={10}>
                             <Input 
                                 value={this.state.taskNO}
                                 onChange={(e)=>{this.setState({taskNO:e.target.value})}}
@@ -90,8 +91,8 @@ export default class Basis extends Component{
                         </Col>                    
                     </Col>
                     <Col span={12}>
-                        <Col span={10}>测量时间:</Col>
-                        <Col span={14}>
+                        <Col span={8}>测量时间:</Col>
+                        <Col span={10}>
                             <DatePicker
                                 onChange={this.onchangeDatePicker}
                             />
@@ -103,8 +104,8 @@ export default class Basis extends Component{
                 </Row>
                 <Row>
                     <Col span={12}>
-                         <Col span={10}>检查类别:</Col>
-                        <Col span={14}>
+                         <Col span={8}>检查类别:</Col>
+                        <Col span={10}>
                             <Input 
                                 value={this.state.type}
                                 onChange={(e)=>{this.setState({type:e.target.value})}}
@@ -112,8 +113,8 @@ export default class Basis extends Component{
                         </Col>
                     </Col>
                     <Col span={12}>
-                        <Col span={10}>天气状况:</Col>
-                        <Col span={14}>
+                        <Col span={8}>天气状况:</Col>
+                        <Col span={10}>
                             <Input 
                                 value={this.state.weather}
                                 onChange={(e)=>{this.setState({weather:e.target.value})}}
@@ -123,8 +124,8 @@ export default class Basis extends Component{
                 </Row>
                 <Row>
                     <Col span={12}>
-                        <Col span={10}>测量地址:</Col>
-                        <Col span={14}>
+                        <Col span={8}>测量地址:</Col>
+                        <Col span={10}>
                             <Input 
                                 value={this.state.address}
                                 onChange={(e)=>{this.setState({address:e.target.value})}}
@@ -132,8 +133,8 @@ export default class Basis extends Component{
                         </Col>
                     </Col>
                     <Col span={12}>
-                        <Col span={10}>被检测单位:</Col>
-                        <Col span={14}>
+                        <Col span={8}>被检测单位:</Col>
+                        <Col span={10}>
                             <Input 
                                  value={this.state.unit}
                                  onChange={(e)=>{this.setState({unit:e.target.value})}}
@@ -143,8 +144,8 @@ export default class Basis extends Component{
                 </Row>
                 <Row>
                     <Col span={12}>
-                        <Col span={10}>被检测单位联系人电话:</Col>
-                        <Col span={14}>
+                        <Col span={8}>被检测单位联系人电话:</Col>
+                        <Col span={10}>
                             <Input 
                                  value={this.state.contactPersonTel}
                                  onChange={(e)=>{this.setState({contactPersonTel:e.target.value})}}
@@ -152,8 +153,8 @@ export default class Basis extends Component{
                         </Col>
                     </Col>
                     <Col span={12}>
-                        <Col span={10}>被检测单位联系人:</Col>
-                        <Col span={14}>
+                        <Col span={8}>被检测单位联系人:</Col>
+                        <Col span={10}>
                             <Input 
                                 value={this.state.contactPerson}
                                 onChange={(e)=>{this.setState({contactPerson:e.target.value})}}
@@ -164,8 +165,8 @@ export default class Basis extends Component{
                 </Row>
                 <Row>
                     <Col span={12}>
-                        <Col span={10}>GPS地址:</Col>
-                        <Col span={14}>
+                        <Col span={8}>GPS地址:</Col>
+                        <Col span={10}>
                             <Input 
                                  value={this.state.GPS}
                                  onChange={(e)=>{this.setState({GPS:e.target.value})}}
