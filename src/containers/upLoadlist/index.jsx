@@ -112,23 +112,23 @@ export default class UploadList extends Component{
                 </Card>
                 <Card>
                     <div>
-                    <textt>上传点位示意图</textt>
-                    <Upload
-                        accept='image/*'
-                        action="http://coldcofe.cn:7000/upload"
-                        listType="picture-card"
-                        onPreview={this.handlePreview}
-                        onChange={(info)=>{this.handleChange(info,1)}}
-                        onRemove={false}
-                    >
-                        <div>
-                            <Icon type="plus" />
-                            <div className="ant-upload-text">Upload</div>
-                        </div>
-                    </Upload>
+                        <text style={{display: 'inline-block', width: '100px'}}>上传点位示意图</text>
+                        <Upload
+                            accept='image/*'
+                            action="http://coldcofe.cn:7000/upload"
+                            listType="picture-card"
+                            onPreview={this.handlePreview}
+                            onChange={(info)=>{this.handleChange(info,1)}}
+                            onRemove={false}
+                        >
+                            <div>
+                                <Icon type="plus" />
+                                <div className="ant-upload-text">Upload</div>
+                            </div>
+                        </Upload>
                     </div>
                     <div>
-                        <text>上传拍照图片</text>
+                        <text style={{display: 'inline-block', width: '100px'}}>上传拍照图片</text>
                         <Upload
                             accept='image/*'
                             action="http://coldcofe.cn:7000/upload"
