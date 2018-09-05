@@ -45,6 +45,7 @@ class Main extends Component {
         this.setState({
             result:this.dataInfo.result,
         });
+        this.getAllPointPic()
     }
     next() {
         const current = this.state.current + 1;
@@ -83,7 +84,7 @@ class Main extends Component {
     }
 
     sketchMapApply = (val) => {
-        this.dataInfo.sketchMap = val
+        this.dataInfo.pic = val
         LoginService.updatereportslist(this.dataInfo,(response)=>{
             Message.success('替换点位示意图成功！')
             localStorage.setItem('tableObj', JSON.stringify(response))
@@ -151,13 +152,13 @@ class Main extends Component {
                             </Modal>
                         </div>
                         <div className="pic-wall-container">
-                            <ul className="pic-container" style={{width: 215*this.dataInfo.pictures.length+'px'}}>
+                            <ul className="pic-container" style={{width: 215*this.state.pictures.length+'px'}}>
                                 
                                 {this.state.pictures.map( item => {
                                     return (
                                         <li className="pic-wall">
-                                            <img src={item} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal(item)}}/>
-                                            <Button className="point-btn" onClick={() => this.sketchMapApply(item)}>应用</Button>
+                                            <img src={item.pic} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal(item.pic)}}/>
+                                            <Button className="point-btn" onClick={() => this.sketchMapApply(item.pic)}>应用</Button>
                                         </li>
                                     )
                                 })}

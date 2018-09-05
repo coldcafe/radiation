@@ -1,6 +1,6 @@
 import React ,{Component} from 'react';
 import LevelBcrumb from '../../component/bcrumb/level1Bcrumb';
-import {Button,Upload,message}  from 'antd';
+import {Button,Upload,message,Modal}  from 'antd';
 require('./style/index.less');
 import LoginService from '../../services/loginService';
 import { resolve } from 'url';
@@ -11,6 +11,8 @@ import { resolve } from 'url';
         super(props)
         this.state = {
             pictures: [],
+            previewVisible: false,
+            currentUrl: ''
         }
     }
     getUploadSuccess=(info)=>{
@@ -28,6 +30,17 @@ import { resolve } from 'url';
         } else if (info.file.status === 'error') {
             message.error('图片上传失败');
         }
+    }
+    cancelModal = () => {
+        this.setState({
+            previewVisible: false
+        })
+    }
+    setCurrentUrl = (val) => {
+        this.setState({
+            currentUrl: val,
+            previewVisible: true
+        })
     }
     getsketchmap=()=>{
         LoginService.getListsketchmap(null,(response)=>{
@@ -55,21 +68,29 @@ import { resolve } from 'url';
                             this.getUploadSuccess(info)
                         }}     
                     >
-                        <Button type="upload">上传点位示意图</Button>
+                        <Button 
+                            type="upload"
+                            size="large"
+                            style={{marginBottom:20,height:30,width:150}}
+                        
+                        >上传点位示意图</Button>
                     </Upload>
                 </div>
-                <div className="pic-wall-container">
+                <div>
                     <ul className="pic-container">
                         {this.state.pictures.map((item, index) => {
-                            console.log(item);
                             return (
-                                <li className="pic-wall" key={item.id}>
-                                    <img src={item.pic} alt=""/>
+                                <li className="pic-wall large-view" key={item.id} onClick={() => {this.setCurrentUrl(item.pic)}}>
+                                    <img src={item.pic} alt="" style={{width: '200px', height: 'auto'}}/>
                                 </li>
                             )
                         })}
                     </ul>
                 </div>
+
+                <Modal visible={this.state.previewVisible} footer={null} onCancel={() => {this.cancelModal()}}>
+                    <img alt="example" style={{ width: '100%' }} src={this.state.currentUrl} />
+                </Modal>
              </view>
         );
     }

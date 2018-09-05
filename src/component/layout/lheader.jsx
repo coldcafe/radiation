@@ -49,9 +49,26 @@ export class Lheader extends Component {
 	render() {
 		return (
 			<Header className="layout-header">
-	            <Icon className="trigger" type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggle} />
+				<Icon 
+					className="trigger" 
+					style={{color:'#ffffff'}}
+					type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'} 
+					onClick={this.toggle} 
+				/>
 	            <Menu mode="horizontal" onClick={this.logout} className="layout-header-menu">
-		        <SubMenu className="trigger-menu" title={<span><Icon type="user" />{ this.state.userInfo&& this.state.userInfo.username}</span>}>
+				<SubMenu 
+					className="trigger-menu" 
+					title={<span style={{display:'flex',flexDirection:'column'}}>
+							<Icon 
+								type="github" 
+								theme="filled"
+								style={{color:'#ffffff',fontSize:30,marginTop:10}}
+							/>
+							<text style={{color:'#ffffff'}}>
+							{ this.state.userInfo&& this.state.userInfo.username}
+							</text>
+							</span>}
+				>
 		        	<Menu.Item key="logout">注销</Menu.Item>
 		        </SubMenu>
 			    </Menu>

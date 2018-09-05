@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button,Card,Modal,Form,Input,Col,Row,Upload,Icon} from 'antd';
+import {Button,Card,Modal,Form,Input,Col,Row,Upload,Icon,message} from 'antd';
 import LevelBcrumb from '../../component/bcrumb/level1Bcrumb';
 import Basis from './ basis';
 import UpLoadTable from './upLoadTable';
@@ -16,6 +16,7 @@ export default class UploadList extends Component{
             address:'',//  测量位置
             sketchMap:'',// 点位示意图的url
             pictures:[],  //拍照的url
+            down:false,
         }
     }
     addUpLoadList=()=>{
@@ -87,32 +88,44 @@ export default class UploadList extends Component{
     }
     //上传消息的按钮
     upLoadListMessage=()=>{
+        this.setState({
+            down:true,
+        })
         var baseInfo=this.refs.basisInfo.getBaseInfo();
         if(!baseInfo){
             return;
         }
         var upJson={...baseInfo,...this.state.data,pictures:this.state.pictures,sketchMap:this.state.sketchMap};
-        console.log(upJson);
         LoginService.creatreportslist(upJson,(response)=>{
-            console.log(response);
+           message.success('上传数据成功');
+           this.setState({
+               down:false,
+           })
         },(error)=>{
-            console.log(error);
+            message.error('上传数据失败');
         });
     }
     render(){
         return(
             <div>
                 <LevelBcrumb title="数据展示"/>
-                <Card>
+                <Card title="基本信息"  bordered={false}>
                     <Basis ref="basisInfo" />
-                </Card>
-                <Card>
+                </Card >
+                <Card title="测量数据"  bordered={false} className="mg-top20">
                     <UpLoadTable  data={this.state.data}/>
-                    <Button onClick={()=>{this.addUpLoadList()}}>添加测量数据</Button>
+                    <div style={{display:'flex', justifyContent:'center',alignItems:'center'}}>
+                    <Button  type="primary" size="large" onClick={()=>{this.addUpLoadList()}}
+                        style={{marginTop:20}}
+                    >添加测量数据</Button>
+                    </div>
+                    
                 </Card>
-                <Card>
-                    <div>
-                        <text style={{display: 'inline-block', width: '100px'}}>上传点位示意图</text>
+                <Card title="上传照片"  bordered={false} className="mg-top20">
+                    <div style={{display:'flex',flexDirection:'column'}}>
+                        <text 
+                            style={{display: 'inline-block', width: '150px',marginBottom:10,fontSize:13}}
+                        >上传点位示意图</text>
                         <Upload
                             accept='image/*'
                             action="http://coldcofe.cn:7000/upload"
@@ -127,8 +140,10 @@ export default class UploadList extends Component{
                             </div>
                         </Upload>
                     </div>
-                    <div>
-                        <text style={{display: 'inline-block', width: '100px'}}>上传拍照图片</text>
+                    <div style={{display:'flex',flexDirection:'column'}}> 
+                        <text 
+                            style={{display: 'inline-block', width: '150px',marginBottom:10,fontSize:13}}
+                        >上传拍照图片</text>
                         <Upload
                             accept='image/*'
                             action="http://coldcofe.cn:7000/upload"
@@ -144,9 +159,13 @@ export default class UploadList extends Component{
                         </Upload>
                     </div>
                     <div>
-                        <Button onClick={()=>{this.upLoadListMessage()}}>上传数据</Button>
+                        
                     </div>
                 </Card>
+                <Card className="mg-top20" style={{display:'flex', justifyContent:'center',alignItems:'center'}}>
+                    <Button  type="primary" size="large"  onClick={()=>{this.upLoadListMessage()}} loading={this.state.down}>上传数据</Button>
+                </Card>
+                <div style={{height:50}}></div>
                 <Modal visible={this.state.isShowListModel} title="编辑" width={600} 
                     //footer={null} 
                     onCancel={() => { this.cancelModal() }}

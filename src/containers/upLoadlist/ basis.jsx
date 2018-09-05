@@ -59,16 +59,14 @@ export default class Basis extends Component{
         return (
              <div className="edit-basicInfo">
                  <Row>
-                    <Col span={12}>
-                        <Row>
-                            <Col span={8}>测量人:</Col>
+                    <Col span={12} style={{marginTop:0}}>
+                        <Col span={8}>测量人:</Col>
                             <Col span={10}>
                                 <Input 
                                     value={this.state.measurePerson}
                                     onChange={(e)=>{this.setState({measurePerson:e.target.value})}}
                                 />
                             </Col>
-                        </Row>
                     </Col>
                     <Col span={12}>
                         <Col span={8}>仪器型号和编号:</Col>
