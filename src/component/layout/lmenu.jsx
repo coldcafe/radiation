@@ -58,7 +58,7 @@ export class Lmenu extends Component {
 				<Menu.Item key='list'>
 					<Link to='/List/list'>
 						<Icon type="laptop" />
-						<span className='nav-text'>数据展示</span>
+						<span className='nav-text'>数据查看</span>
 					</Link>
 				</Menu.Item>
 				<Menu.Item key='Uploadlist'>

@@ -89,9 +89,6 @@ class Login extends Component {
 				        <FormItem>
 				            <Button type="primary" htmlType="submit" size="large" loading={loginInfo.length > 0 ? true : false}>{loginInfo.length > 0 ? '登录中...' : '登录'}</Button>
 				        </FormItem>
-						<div>
-							<Button size="large" onClick={()=>{this.pushtoRegister()}}>注册</Button>
-						</div>
 			        </Form>
 		        </Spin>
 			</div>

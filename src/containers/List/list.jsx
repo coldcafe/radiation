@@ -229,6 +229,7 @@ class List extends Component{
                         pagination={false}
                     > 
                     </Table>
+                    <div style={{display:'flex',alignItems:'center',flexDirection:'row',justifyContent:'center',marginBottom:30}}>
                     <Pagination 
                         defaultCurrent={1} 
                         total={this.state.dataSource.count} 
@@ -240,6 +241,8 @@ class List extends Component{
                         }}
                         style={{marginTop: 20}}
                     />
+                    </div>
+                    
                 </Spin>
                 
             </div>

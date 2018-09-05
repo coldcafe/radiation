@@ -55,6 +55,12 @@ export class Lheader extends Component {
 					type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'} 
 					onClick={this.toggle} 
 				/>
+				
+				<text 
+					style={{ color:'white',fontSize:23,fontWeight:23,lineHeight:'80px',
+					float:'left',marginLeft:50,lineHeight:'80px'}}
+				>辐射检测后台管理系统</text>
+				
 	            <Menu mode="horizontal" onClick={this.logout} className="layout-header-menu">
 				<SubMenu 
 					className="trigger-menu" 

@@ -54,6 +54,15 @@ class LoginService {
     downLoadWordOffice(params,success,fail){
         return Xhr.down('/reports/export/'+params,'',success,fail);
     }
+
+    //删除用户
+    deleteUser(params,success,fail){
+        return Xhr.delete('/users/'+params,'',success,fail);
+    }
+    //修改用户权限
+    changeUserRole(params,success,fail){
+        return Xhr.put('/users',params,success,fail);
+    }
 }
 
 // 实例化再导出
