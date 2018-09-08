@@ -31,6 +31,7 @@ class LoginService {
         return Xhr.get('/reports/list',params,success,fail);
     }
 
+    //修改数据详情接口
     updatereportslist(params,success,fail){
         return Xhr.put('/reports',params,success,fail);
     }

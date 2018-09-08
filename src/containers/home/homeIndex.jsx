@@ -28,23 +28,23 @@ class Main extends Component {
     	super(props);
         this.state = {
              current: 0,
-             previewVisible:false,
-             width: 0,
-             height: 0,
-             imgStyle: {},
-             isShowCanvas: false,
-             currentUrl: '',
-             pictures: [],
-             result:'',
+             previewVisible:false,      //展示点位示意图的modal
+             showbaseInfoVisible:false,   //展示修改baseinfo 的modal
+             currentUrl: '',   
+             data:[],       //测量数据
+             sketchMap:'',  // 点位示意图
+             pictures: [],    //图片数据
+             result:'',    //结果数据
+             baseInfo:{},  //base 数据
+             sketchPictures:[],  //点位示意图的模版数组
+
         };
 
-        this.dataInfo = {}
+        this.dataInfo = {}   //这个是总数据 ，
     }
     componentWillMount() {
         this.dataInfo = JSON.parse(localStorage.getItem('tableObj'))   
-        this.setState({
-            result:this.dataInfo.result,
-        });
+        this.changeAllDataWithJson();
         this.getAllPointPic()
     }
     next() {
@@ -65,7 +65,6 @@ class Main extends Component {
             currentUrl: url
         })
     }
-
     getAllPointPic() {
         LoginService.getListsketchmap(null,(response)=>{
             this.setState({
@@ -113,13 +112,6 @@ class Main extends Component {
         .catch(function (error) {
             console.log(error);
         });
-        // LoginService.downLoadWordOffice(this.dataInfo.id,(response)=>{
-        //     console.log('chenggong');
-        //     console.log(response);
-        // },(error)=>{
-        //     console.log('shibai');
-        //     console.log(error);
-        // });
     }
     //保存word 文档数据
     saveWordMessage=()=>{
@@ -131,29 +123,119 @@ class Main extends Component {
             Message.error('结论保存失败');
          });
     }
+
+    //获取baseinfo
+    getBaseInfo=()=>{
+        var json={...this.dataInfo}||{};
+        delete json.data;
+        delete json.result;
+        delete json.sketchMap;
+        delete json.pictures;
+        console.log(json);
+        return json;
+    }
+    //改变baseinfo
+    changeBaseInfo=(baseinfo,success,fail)=>{
+        LoginService.updatereportslist(baseinfo,response=>{
+            console.log(response);
+            this.dataInfo=response;
+            this.changeAllDataWithJson();
+            success();
+        },error=>{
+            fail();
+        });
+    }
+
+    changeAllDataWithJson=()=>{
+        var baseInfo=this.getBaseInfo();
+        this.setState({
+            sketchMap:this.dataInfo.sketchMap,
+            data:this.dataInfo.data,
+            pictures:this.dataInfo.pictures,
+            baseInfo:baseInfo,
+            result:this.dataInfo.result,
+        });
+    }
+
+
+    // 添加measureData 的数据，删除 ，修改  删除 type ==0 ，修改 type==1
+    changemeasureData=(json,type,index)=>{
+        if(type===0){
+            // 是0 的话就是删除
+            var arr=this.state.data;
+            arr.splice(index,1);
+            var data={id:this.dataInfo.id, data:arr};
+            LoginService.updatereportslist(data,response=>{
+                message.success('删除数据成功');
+                this.dataInfo=response;
+                this.changeAllDataWithJson();
+            },error=>{
+                message.error('删除数据失败');
+            });
+        }else if(type==1){
+            //如果是1的话那么就是修改数据
+            var arr=this.state.data;
+            json.id=arr[index].id
+            arr[index]=json;
+            var data={id:this.dataInfo.id, data:arr};
+            LoginService.updatereportslist(data,response=>{
+                console.log(response);
+                message.success('修改数据成功');
+                this.dataInfo=response;
+                this.changeAllDataWithJson();
+            },error=>{
+                message.error('修改数据失败');
+            });
+        }else if(type==2){
+            // 等于2就是新增加数据
+            var arr=this.state.data;
+            arr.push(json);
+            var data={id:this.dataInfo.id, data:arr};
+            LoginService.updatereportslist(data,response=>{
+                message.success('添加数据成功');
+                this.dataInfo=response;
+                this.changeAllDataWithJson();
+            },error=>{
+                message.error('添加数据失败');
+            });
+        }
+    }
 	render() { 
 		return (
         <div className="home-container">
-            {/* <Breadcrumb title="数据详情" historyroute="/List/list" historyTitle='数据展示'/>  */}
             <Bcrumb title="数据详情" historyTitle={'数据展示'} historyroute={'/List/list'}></Bcrumb>
             <Row>
             	<Col span={24}>
-                    <Card  title="基本信息"  bordered={false} className="mg-top20">
-                        <BaseInfoComponent  data={this.dataInfo}/>
+                    <Card  
+                        title="基本信息"  
+                        bordered={false} 
+                        className="mg-top20"
+                        extra={<Button onClick={()=>{
+                            this.refs.BaseInfoComponent.showModal();
+                        }}>编辑</Button>}
+                    >
+                        <BaseInfoComponent  
+                            ref='BaseInfoComponent'
+                            data={this.state.baseInfo}
+                            changeBaseInfo={(baseInfo,success,error)=>{this.changeBaseInfo(baseInfo,success,error)}}
+                        />
                     </Card> 
                     <Card title="测量数据" bordered={true} className="mg-top20">
-                       <DataTable data={this.dataInfo} ></DataTable>
+                        <DataTable 
+                            data={this.state.data} 
+                            changemeasureData={this.changemeasureData}
+                        ></DataTable>
                     </Card> 
+
                     <Card title="点位示意图" bordered={true} className="mg-top20">
                         <div className="point_pic">
-                            <img src={this.dataInfo.sketchMap} alt="" style={{width: '300px', height: 'auto'}} onClick={()=>{this.showImageModal(this.dataInfo.sketchMap)}}/>
+                            <img src={this.state.sketchMap} alt="" style={{width: '300px', height: 'auto'}} onClick={()=>{this.showImageModal(this.dataInfo.sketchMap)}}/>
                             <Modal visible={this.state.previewVisible} footer={null} onCancel={() => {this.cancelModal()}}>
                                 <img alt="example" style={{ width: '100%' }} src={this.state.currentUrl} />
                             </Modal>
                         </div>
                         <div className="pic-wall-container">
                             <ul className="pic-container" style={{width: 215*this.state.pictures.length+'px'}}>
-                                
                                 {this.state.pictures.map( item => {
                                     return (
                                         <li className="pic-wall">
@@ -167,9 +249,9 @@ class Main extends Component {
                     </Card>
                     <Card title="照片" bordered={true} className="mg-top20">
                         <div className="pic-wall-container">
-                            <ul className="pic-container" style={{width: 215*this.dataInfo.pictures.length+'px'}}>
+                            <ul className="pic-container" style={{width: 215*this.state.pictures.length+'px'}}>
                                 
-                                {this.dataInfo.pictures.map( item => {
+                                {this.state.pictures.map( item => {
                                     return (
                                         <li className="pic-wall">
                                             <img src={item} alt="" style={{width: '200px', height: 'auto'}} onClick={()=>{this.showImageModal(item)}}/>

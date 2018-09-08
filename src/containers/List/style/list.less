@@ -1,30 +1,29 @@
 .search-body{
     flex-direction: row;
+    flex-wrap: wrap;
     display: flex;
     background: #d1d1d1;
+    align-items: center;
+    padding-bottom: 15px;
+    padding-top: 15px;
     .search-menu{
-        margin-top: 20px;
-        margin-bottom: 20px;
-        margin-left: 20px;
-        height: 50px;
+        align-items: center;
+        margin-left: 10px;
         display:flex;
-        padding-top: 5px;
         flex-direction: row;
         .ant-input{
             height: 40px;
-            margin-left: 10px; 
+            margin-left: 10px;
         }
         .ant-calendar-picker{
+            display: inline-block;
             height: 40px;
-            margin-left: 10px; 
+            margin-right: 10px;
             
         }
         >span{
             display: inline-block;
-            min-width: 70px;
-            line-height: 40px;
-            font-size: 16px;
-            text-align: right;
+            font-size: 12px;
             vertical-align: middle;
         }
         .search-input{
@@ -33,7 +32,7 @@
     }
     
     .ant-btn{
-        margin-top: 25px;
+       // margin-top: 25px;
         height: 40px;
         width: 100px;
         margin-left: 30px;

@@ -200,7 +200,7 @@ class List extends Component{
                                 />
                         </div>
                         <div  className="search-menu">
-                            <span >测量人</span>
+                            <span   style={{width:50}}>测量人</span>
                             <Input 
                                 className="search-input"
                                 id={123}
@@ -210,7 +210,7 @@ class List extends Component{
                             />
                         </div>
                         <div className="search-menu">
-                            <span>测量地点</span>
+                            <span style={{width:70}}>测量地点</span>
                             <Input
                                 className="search-input"
                                 id={234}
