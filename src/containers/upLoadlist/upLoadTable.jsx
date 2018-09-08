@@ -6,18 +6,28 @@ export default class upLoadTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: this.props.data || {},
+            data: this.props.data ||[],
             editModal: false,
             currentRow: [],
             currentIdx: 0,
-            tmpData: []
+            currentmeasurePoint:'',
+
         }
     }
+    componentWillReceiveProps(props){
+        this.setState({
+            data:props.data||[],
+            currentIdx:0,
+            currentRow:[],
+            currentmeasurePoint:'',
+        });
+    }
+
     getmeasureData = (type, data) => {  //type  0代表测量位置 1代表展示的数据
         if (data) {
             let arrayData = []
-            data.slice(0, 10).forEach(item => {
-                arrayData.push(<Col className="measure-10">{item}</Col>)
+            data.slice(0, 10).forEach((item,index) => {
+                arrayData.push(<Col className="measure-10" key={index}>{item}</Col>)
             })
 
             return (
@@ -28,7 +38,7 @@ export default class upLoadTable extends Component {
         }
         var array = [];
         for (var i = 1; i < 11; i++) {
-            array.push(<Col className="measure-10">{i}</Col>);
+            array.push(<Col className="measure-10" key={i}>{i}</Col>);
         }
         return (
             <Row>
@@ -37,11 +47,14 @@ export default class upLoadTable extends Component {
         )
     }
     editData(data, index) {        
+        console.log(data);
+        var a=data.values.split(',');
+        console.log(a);
         this.setState({
             editModal: true,
             currentIdx: index,
-            currentRow: data,
-            tmpData: data
+            currentRow: data.values.split(','),
+            currentmeasurePoint:data.measurePoint,
         })
         
     }
@@ -52,41 +65,18 @@ export default class upLoadTable extends Component {
     }
     handleSubmit(e) {
         e.preventDefault()
-        
-        var arrData = this.state.data.data
-        
-        var index = this.state.currentIdx
+        var values=this.state.currentRow.join(',');
+        var json={K:'0',measurePoint:this.currentmeasurePoint,values:values};
+        this.props.changemeasureData(json,1,this.state.currentIdx);
+        this.setState({
+            editModal:false,
+        })
 
-        arrData[index].values = this.state.currentRow.join(',')
-
-        LoginService.updatereportslist(this.state.data,(response)=>{
-            this.setState({
-                data: response,
-                editModal: false,
-                currentRow: [],
-                tmpData: []
-            })
-            Message.success('编辑测量数据成功！')
-            localStorage.setItem('tableObj', JSON.stringify(response))
-        },(error)=>{
-            console.log('error==='+ JSON.stringify(error));
-            Message.error('编辑测量数据失败！')
-            let data = JSON.parse(localStorage.getItem('tableObj'))
-            this.setState({
-                data: data,
-                editModal: false,
-                currentRow: [],
-                tmpData: []
-            })
-
-        });
-        // console.log(this.state.data,this.state.tmpData);
     }
     handleReset = () => {
         this.setState({
             editModal: false,
             currentRow: [],
-            tmpData: []
         })
         
     }
@@ -98,20 +88,24 @@ export default class upLoadTable extends Component {
         })
 
     }
+
+    deleteData=(dataArr,index)=>{
+        this.props.changemeasureData('',0,index);
+    }
     render() {
-        const dataArrList = this.state.data.data?this.state.data.data:[];
+        const dataArrList = this.state.data?this.state.data:[];
         return (
             <div>
                 {
                     dataArrList.map((item, idx) => {
-                        const dataArr = item.values.split(',')
+                        var dataArr = item.values.split(',')
                         return (
-                            <div>
+                            <div key={idx}>
                                 <Row className="table-row">
                                     <Col span={2}>
                                         <text>测量位置</text>
                                     </Col>
-                                    <Col span={20}>测量位置{idx + 1}</Col>
+                                    <Col span={20}>{item.measurePoint}</Col>
                                     <Col span={2}>
                                         <text>操作</text>
                                     </Col>
@@ -122,8 +116,14 @@ export default class upLoadTable extends Component {
                                         {this.getmeasureData(0)}
                                         {this.getmeasureData(0, dataArr)}
                                     </Col>
-                                    <Col span={2} className="col-empty-2 table-edit">
-                                        <a onClick={() => this.editData(dataArr, idx)}>编辑</a>
+                                    <Col span={2} className="col-empty-2 table-edit"
+                                        style={{display:'flex',flexDirection:'row',justifyContent:'space-around'}}
+                                    >
+                                        <a onClick={() => this.deleteData(item, idx)}
+                                            style={{color:'red'}}
+                                        >删除</a>
+                                        <a onClick={() => this.editData(item, idx)}>编辑</a>
+                                       
                                     </Col>
                                 </Row>
                                 <Row className="table-row">
@@ -147,12 +147,25 @@ export default class upLoadTable extends Component {
                             onSubmit={(e) => this.handleSubmit(e)}
                             layout="inline"
                         >
+                            <Row style={{display:'flex',flexDirection:'row',marginBottom:20}}>
+                                <div 
+                                    style={{ flexDirection:'row',display:'flex',marginLeft:0,alignItems:'center'}}
+                                >
+                                    <text >测量位置:</text>
+                                </div>
+                                <Input
+                                    value={this.state.currentmeasurePoint}
+                                    onChange={(e)=>{this.setState({currentmeasurePoint:e.target.value})}}
+                                    style={{width:435,marginLeft:10,display:'block'}}
+                                />
+                            </Row>
+
                             <Row gutter={24}>
                                 {this.state.currentRow.slice(0, 10).map((item, index) => {
                                     return (
                                         <Col span={8} key={index} style={{ border: 0 }}>
                                             <FormItem label={index + 1}>
-                                                <Input placeholder="placeholder" style={{ width: '90px' }} defaultValue={this.state.currentRow[index]} onChange={(e) => this.changeInput(e, index)}></Input>
+                                                <Input placeholder="placeholder" style={{ width: '90px' }} value={this.state.currentRow[index]} onChange={(e) => this.changeInput(e, index)}></Input>
                                             </FormItem>
                                         </Col>
                                     )
@@ -162,17 +175,17 @@ export default class upLoadTable extends Component {
                             <Row>
                                 <Col span={8} key={10} style={{ border: 0 }}>
                                     <FormItem label="均值R">
-                                        <Input placeholder="placeholder" style={{ width: '90px' }} defaultValue={this.state.currentRow[10]} onChange={(e) => this.changeInput(e, 10)}></Input>
+                                        <Input placeholder="placeholder" style={{ width: '90px' }} value={this.state.currentRow[10]} onChange={(e) => this.changeInput(e, 10)}></Input>
                                     </FormItem>
                                 </Col>
                                 <Col span={8} key={11} style={{ border: 0 }}>
                                     <FormItem label="标准差">
-                                        <Input placeholder="placeholder" style={{ width: '90px' }} defaultValue={this.state.currentRow[11]} onChange={(e) => this.changeInput(e, 11)}></Input>
+                                        <Input placeholder="placeholder" style={{ width: '90px' }} value={this.state.currentRow[11]} onChange={(e) => this.changeInput(e, 11)}></Input>
                                     </FormItem>
                                 </Col>
                                 <Col span={8} key={12} style={{ border: 0 }}>
                                     <FormItem label="结果D">
-                                        <Input placeholder="placeholder" style={{ width: '90px' }} defaultValue={this.state.currentRow[12]} onChange={(e) => this.changeInput(e, 12)}></Input>
+                                        <Input placeholder="placeholder" style={{ width: '90px' }} value={this.state.currentRow[12]} onChange={(e) => this.changeInput(e, 12)}></Input>
                                     </FormItem>
                                 </Col>
                             </Row>

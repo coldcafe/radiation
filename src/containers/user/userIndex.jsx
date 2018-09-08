@@ -59,8 +59,11 @@ class Main extends Component {
 		dataIndex:'action',
 		align:'center',
 		render:(text,record,index)=>{
+			
 			return(
 				<div>
+					{record.Character!='超级管理员'?
+					<div>
 					<Button 
 						onClick={()=>{this.showdeleteUserWithJSON(record)}}
 						style={{backgroundColor:'transparent',borderColor:'transparent',color:'red'}}
@@ -69,6 +72,10 @@ class Main extends Component {
 						onClick={()=>{this.showchangeUserCharacterWithJSON(record)}}
 						style={{backgroundColor:'transparent',borderColor:'transparent',color:'#1478E3'}}
 					>编辑</Button>
+					</div>
+					:
+					null
+					}
 				</div>
 				
 			)

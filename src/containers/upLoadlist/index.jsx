@@ -4,20 +4,33 @@ import LevelBcrumb from '../../component/bcrumb/level1Bcrumb';
 import Basis from './ basis';
 import UpLoadTable from './upLoadTable';
 import LoginService from '../../services/loginService';
+import Config from '../../config';
 require('../home/style/home.less');
 const FormItem = Form.Item
+
+// 逻辑是这样的 。 this.data   //总的数据合并在这里
+//  address：'' 当前输入的测量位置
+//pictures ：//  拍照的url 
+// currentRow ；// 当前的输入测量位置
+//
+// sketchMap；  //点位示意图的url
+// pictures ： //拍照的url
+
+// measureData :  // 测量的数据数组
+
 export default class UploadList extends Component{
     constructor(props){
         super(props);
         this.state={
-            data:{},
             isShowListModel:false,
             currentRow:['','','','','','','','','','','','',''],
             address:'',//  测量位置
-            sketchMap:'',// 点位示意图的url
-            pictures:[],  //拍照的url
             down:false,
+            measureData:[],
         }
+        this.data={};
+        this.sketchMap='';// 点位示意图的url
+        this.pictures=[];  //拍照的url
     }
     addUpLoadList=()=>{
         this.setState({
@@ -31,19 +44,18 @@ export default class UploadList extends Component{
             isShowListModel:false,
         })
     }
+
+    // 添加measureData
     pushDataTodata=()=>{
         var json={K:'0',measurePoint:this.state.address,values:this.state.currentRow.join(",")};
-        var newdata=this.state.data;
-        var row=this.state.data.data ?this.state.data.data:[];
-        row.push(json);
-        newdata.data=row;
         this.setState({
-            data:newdata,
+            measureData:this.state.measureData.concat(json),
             isShowListModel:false,
             currentRow:['','','','','','','','','','','','','',],
-            previewVisible:false,
         });
     }
+
+    // 修改 currentRow的数据
     changeInput=(e,index)=>{
         var arr=[];
           this.state.currentRow.map((item,index)=>{
@@ -63,26 +75,23 @@ export default class UploadList extends Component{
     }
     //点位示意图的modal 的
     handlePreview=(file)=>{
+
         this.setState({
             previewVisible:true,
             previewImage:file.thumbUrl,
         })
     }
+    //改变 sketmap和pictures
     handleChange=(info,type)=>{
         if(type==1){  //如果是1 那么就是上传的是点位示意图
             if(info.file.status=='done'){
                 console.log(2);
-                this.setState({
-                    sketchMap:'http://coldcofe.cn:7000/api/'+info.file.response,
-                });
+                this.sketchMap=Config.target+'/file/files'+info.file.response;
             }
         }else{
             if(info.file.status=='done'){
                 console.log(1);
-
-                this.setState({
-                    pictures:this.state.pictures.concat('http://coldcofe.cn:7000/api/'+info.file.response),
-                });
+                this.pictures=this.pictures.concat(Config.target+'/file/files'+info.file.response);
             }
         }
     }
@@ -95,16 +104,36 @@ export default class UploadList extends Component{
         if(!baseInfo){
             return;
         }
-        var upJson={...baseInfo,...this.state.data,pictures:this.state.pictures,sketchMap:this.state.sketchMap};
-        LoginService.creatreportslist(upJson,(response)=>{
-           message.success('上传数据成功');
-           this.setState({
-               down:false,
-           })
+        this.data={...baseInfo,pictures:this.pictures,sketchMap:this.sketchMap,data:this.state.measureData};
+        LoginService.creatreportslist(this.data,(response)=>{
+            message.success('上传数据成功');
+            location.reload();
         },(error)=>{
+            this.setState({
+                down:false,
+            })
             message.error('上传数据失败');
         });
     }
+    // 添加measureData 的数据，删除 ，修改  删除 type ==0 ，修改 type==1
+    changemeasureData=(json,type,index)=>{
+        if(type===0){
+            // 是0 的话就是删除
+            var arr=this.state.measureData;
+            arr.splice(index,1);
+            this.setState({
+                measureData:arr,
+            });
+        }else if(type==1){
+            //如果是1的话那么就是修改数据
+            var arr=this.state.measureData;
+            arr[index]=json;
+            this.setState({
+                measureData:arr
+            });
+        }
+    }
+
     render(){
         return(
             <div>
@@ -113,7 +142,10 @@ export default class UploadList extends Component{
                     <Basis ref="basisInfo" />
                 </Card >
                 <Card title="测量数据"  bordered={false} className="mg-top20">
-                    <UpLoadTable  data={this.state.data}/>
+                    <UpLoadTable  
+                        data={this.state.measureData}
+                        changemeasureData={this.changemeasureData}
+                    />
                     <div style={{display:'flex', justifyContent:'center',alignItems:'center'}}>
                     <Button  type="primary" size="large" onClick={()=>{this.addUpLoadList()}}
                         style={{marginTop:20}}
@@ -128,7 +160,7 @@ export default class UploadList extends Component{
                         >上传点位示意图</text>
                         <Upload
                             accept='image/*'
-                            action="http://coldcofe.cn:7000/upload"
+                            action= {Config.target+"/file/upload/"}
                             listType="picture-card"
                             onPreview={this.handlePreview}
                             onChange={(info)=>{this.handleChange(info,1)}}
@@ -146,7 +178,7 @@ export default class UploadList extends Component{
                         >上传拍照图片</text>
                         <Upload
                             accept='image/*'
-                            action="http://coldcofe.cn:7000/upload"
+                            action={Config.target+"/file/upload"}
                             listType="picture-card"
                             onPreview={this.handlePreview}
                             onChange={(info)=>{this.handleChange(info,2)}}
@@ -176,11 +208,16 @@ export default class UploadList extends Component{
                             className="ant-advanced-search-form"
                             layout="inline"
                         >
-                            <Row>
-                                <text>测量位置</text>
+                            <Row style={{display:'flex',flexDirection:'row',marginBottom:20}}>
+                                <div 
+                                    style={{ flexDirection:'row',display:'flex',marginLeft:0,alignItems:'center'}}
+                                >
+                                    <text >测量位置:</text>
+                                </div>
                                 <Input
                                     value={this.state.address}
                                     onChange={(e)=>{this.setState({address:e.target.value})}}
+                                    style={{width:435,marginLeft:10,display:'block'}}
                                 />
                             </Row>
                             <Row gutter={24}>

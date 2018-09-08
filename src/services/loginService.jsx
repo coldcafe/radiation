@@ -47,8 +47,9 @@ class LoginService {
     getListsketchmap(params,success,fail){
         return Xhr.get('/reports/sketchmap/list',params,success,fail);
     }
+     //删除点位示意图模版
     deleteSketchmap(params,success,fail){
-        return Xhr.delete('/reports/sketchmap/',params,success,fail);
+        return Xhr.delete('/reports/sketchmap/'+params,'',success,fail);
     }
     //下载doc 文档
     downLoadWordOffice(params,success,fail){
@@ -63,6 +64,8 @@ class LoginService {
     changeUserRole(params,success,fail){
         return Xhr.put('/users',params,success,fail);
     }
+
+   
 }
 
 // 实例化再导出
