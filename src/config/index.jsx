@@ -1,7 +1,10 @@
 const Main = {
 	//http://193.112.148.188:5000/login
 	target: process.env.NODE_ENV !== 'production' ? 'http://111.230.190.78:4000' : 'http://111.230.190.78:4000', //目标网站
-    name: 'Ant Design Admin',
+	name: 'Ant Design Admin',
+	downimgUrl: 'http://111.230.190.78:4000/file/files/',
+	uploadimgUrl:'http://111.230.190.78:4000/file/upload',
+	downDoc:'http://111.230.190.78:4000/reports/export/',
     prefix: 'antdAdmin',
     footerText: '核辐射检测管理系统 版权所有 © 2018 由 成都xxx公司所有',
     logoSrc: 'https://t.alipayobjects.com/images/rmsweb/T1B9hfXcdvXXXXXXXX.svg',

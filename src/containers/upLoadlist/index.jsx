@@ -86,12 +86,12 @@ export default class UploadList extends Component{
         if(type==1){  //如果是1 那么就是上传的是点位示意图
             if(info.file.status=='done'){
                 console.log(2);
-                this.sketchMap=Config.target+'/file/files'+info.file.response;
+                this.sketchMap=info.file.response;
             }
         }else{
             if(info.file.status=='done'){
                 console.log(1);
-                this.pictures=this.pictures.concat(Config.target+'/file/files'+info.file.response);
+                this.pictures=this.pictures.concat(info.file.response);
             }
         }
     }
@@ -160,7 +160,7 @@ export default class UploadList extends Component{
                         >上传点位示意图</text>
                         <Upload
                             accept='image/*'
-                            action= {Config.target+"/file/upload/"}
+                            action= {Config.uploadimgUrl}
                             listType="picture-card"
                             onPreview={this.handlePreview}
                             onChange={(info)=>{this.handleChange(info,1)}}
@@ -178,7 +178,7 @@ export default class UploadList extends Component{
                         >上传拍照图片</text>
                         <Upload
                             accept='image/*'
-                            action={Config.target+"/file/upload"}
+                            action={Config.uploadimgUrl}
                             listType="picture-card"
                             onPreview={this.handlePreview}
                             onChange={(info)=>{this.handleChange(info,2)}}
