@@ -93,6 +93,7 @@
 .pic-container{
     width: 150%;
     height: 100%;
+    display: flex;
 }
 .pic-wall{
     padding: 20px 0;
@@ -122,8 +123,15 @@
     text-align: right;
     .word-btn{
         font-size: 16px;
-        background: #ccc;
-        margin-top: 15px;
+        background:  #1478e3;
+        height: 45px;
+        width: 150px;
+        color: white;
+    }
+    .save_result_btn{
+        margin-right: 30px;
+        height: 45px;
+        width: 150px;
     }
 }
 
@@ -155,4 +163,63 @@ canvas{
        display: flex;
        flex-direction: row;
    }
+}
+.title-edit{
+    display: flex;
+    flex-direction: column;
+    .title-edit-row{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 20px;
+        >text{
+            min-width: 60px;
+            font-size: 13px;
+            font-weight: 800;
+            color: black;
+            
+        }
+        .ant-input{
+            display: block;
+            width: 300px;
+        }
+        .title-edit-rowbtn{
+            margin-left: 20px;
+            background-color: #1478e3;
+            color: white;
+            width: 60px;
+        }
+        
+    }
+    .title-edit-row-word{
+        >text{
+            font-size: 13px;
+            font-weight: 800;
+            color: black;
+        }
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        .word-myitem{
+            overflow-x: scroll;
+        }
+        .word-container{
+           
+            margin-top: 10px;
+            display: flex;
+            flex-direction: row;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            width: 2000px;
+            .word-wall{
+                width: 150px;
+                height: 200px;
+                margin-right: 10px;
+                background-color:rgba(0, 0, 0, 0.7);  
+            }
+
+
+        }
+    }
 }

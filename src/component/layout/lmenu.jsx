@@ -73,6 +73,12 @@ export class Lmenu extends Component {
 						<span className='nav-text'>视图模版</span>
 					</Link>
 				</Menu.Item>
+				<Menu.Item key='wordmanage'>
+					<Link to='/wordmanage/wordmanage'>
+						<Icon type="laptop" />
+						<span className='nav-text'>文档模版</span>
+					</Link>
+				</Menu.Item>
 				{
 					this.role === "superadmin" ?
 						<Menu.Item key="user">

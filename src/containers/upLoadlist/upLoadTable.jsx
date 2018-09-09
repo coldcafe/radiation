@@ -136,6 +136,7 @@ export default class upLoadTable extends Component {
                                     <Col span={4}>{dataArr[12]}</Col>
                                     <Col span={2} className="table-operate"></Col>
                                 </Row>
+                                <div style={{height:30}}></div>
                             </div>
                         )
                     })
@@ -165,7 +166,7 @@ export default class upLoadTable extends Component {
                                     return (
                                         <Col span={8} key={index} style={{ border: 0 }}>
                                             <FormItem label={index + 1}>
-                                                <Input placeholder="placeholder" style={{ width: '90px' }} value={this.state.currentRow[index]} onChange={(e) => this.changeInput(e, index)}></Input>
+                                                <Input  style={{ width: '90px' }} value={this.state.currentRow[index]} onChange={(e) => this.changeInput(e, index)}></Input>
                                             </FormItem>
                                         </Col>
                                     )
@@ -175,17 +176,17 @@ export default class upLoadTable extends Component {
                             <Row>
                                 <Col span={8} key={10} style={{ border: 0 }}>
                                     <FormItem label="均值R">
-                                        <Input placeholder="placeholder" style={{ width: '90px' }} value={this.state.currentRow[10]} onChange={(e) => this.changeInput(e, 10)}></Input>
+                                        <Input  style={{ width: '90px' }} value={this.state.currentRow[10]} onChange={(e) => this.changeInput(e, 10)}></Input>
                                     </FormItem>
                                 </Col>
                                 <Col span={8} key={11} style={{ border: 0 }}>
                                     <FormItem label="标准差">
-                                        <Input placeholder="placeholder" style={{ width: '90px' }} value={this.state.currentRow[11]} onChange={(e) => this.changeInput(e, 11)}></Input>
+                                        <Input  style={{ width: '90px' }} value={this.state.currentRow[11]} onChange={(e) => this.changeInput(e, 11)}></Input>
                                     </FormItem>
                                 </Col>
                                 <Col span={8} key={12} style={{ border: 0 }}>
                                     <FormItem label="结果D">
-                                        <Input placeholder="placeholder" style={{ width: '90px' }} value={this.state.currentRow[12]} onChange={(e) => this.changeInput(e, 12)}></Input>
+                                        <Input  style={{ width: '90px' }} value={this.state.currentRow[12]} onChange={(e) => this.changeInput(e, 12)}></Input>
                                     </FormItem>
                                 </Col>
                             </Row>

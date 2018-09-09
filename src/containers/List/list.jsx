@@ -3,8 +3,6 @@ import { Table,Spin ,Pagination,DatePicker,Input, Button} from 'antd';
 import LoginService from '../../services/loginService';
 import styles from './style/list.less';
 import loginService from '../../services/loginService';
-import moment from 'moment';
-import { stringify } from 'querystring';
 import { BrowerRouter as Router, Route, Link} from 'react-router'
 const RangePicker = DatePicker.RangePicker;
 import LevelBcrumb from '../../component/bcrumb/level1Bcrumb';

@@ -66,7 +66,21 @@ class LoginService {
         return Xhr.put('/users',params,success,fail);
     }
 
+    //获取所有的item
+    getAllWordItem(params,success,fail){
+        return Xhr.get('/reports/doctemp/list',params,success,fail);
+    }
+
+    // 删除item
+    deleteWordItem(params,success,fail){
+        return Xhr.delete('/reports/sketchmap/'+params,null,success,fail);
+    }
+    // 增加item 
+    addWordItem(params,success,fail){
+        return Xhr.post('/reports/doctemp',params,success,fail);
+    }
    
+    
 }
 
 // 实例化再导出

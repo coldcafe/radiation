@@ -36,7 +36,7 @@ class ImageItem extends Component {
                     onMouseMove={() => { this.setState({ showDeleteimg: true }) }}
                     onMouseLeave={() => { this.setState({ showDeleteimg: false }) }}
                 >
-                    <img src={item.pic} alt="" style={{ width: '200px', height: 'auto' }} />
+                    <img src={Config.downimgUrl+item.pic} alt="" style={{ width: '200px', height: 'auto' }} />
                     {
                         this.state.showDeleteimg === true ?
                             <Button
@@ -45,15 +45,7 @@ class ImageItem extends Component {
                                     backgroundColor:'transparent',fontSize:20,color:'white',borderColor:'transparent'}}
                                 onClick={(e) => { e.stopPropagation(); this.setState({ visible: true }) }}
                                 icon={'delete'}
-                            >
-                            {/* <Icon
-                                        type='delete' size='large'
-                                        style={{
-                                         fontSize: '20px',
-                                        color: 'white'
-                                        }}  
-                                /> */}
-                                
+                            >            
                             </Button>
                             : null
                     }
@@ -96,7 +88,7 @@ class ImageManage extends Component {
         }
         if (info.file.status === 'done') {
             //上传成功
-            LoginService.upLoadsketchmap({ pic: Config.target + '/file/files/' + info.file.response, }, (response) => {
+            LoginService.upLoadsketchmap({ pic:info.file.response, }, (response) => {
                 message.success('图片上传成功');
                 this.getsketchmap();
             }, (error) => {
@@ -139,7 +131,7 @@ class ImageManage extends Component {
                 <div>
                     <Upload
                         accept='image/*'
-                        action={Config.target + '/file/upload'}
+                        action={Config.uploadimgUrl}
                         onChange={(info) => {
                             this.getUploadSuccess(info)
                         }}

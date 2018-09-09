@@ -1,0 +1,65 @@
+.word-container{
+    display: flex;
+    flex-direction: column;
+    .word-body{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;  
+        margin-top: 10px;
+            
+    };
+    .add-wordmodal{
+        width: 120px;
+        height: 40px;
+    }  
+    .word-item{
+        width: 30%;
+        margin-right: 2.5%;
+        margin-bottom: 10px;
+        background-color:white;
+        height: 250px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        .ant-btn {
+            margin-top: 10px;
+            width: 80px;
+            height: 30px;
+            display: block;
+        
+
+        }
+        .item-hang{
+            display: flex;
+            flex-direction: row;
+            height: 30px;
+            margin-top: 10px;
+            align-items: center;
+            justify-content: center;
+            >text{
+                margin-left: 20px;
+                font-size: 16px;
+            };
+            
+        }
+        
+    }
+
+}
+.word-edit-modal{
+    display: flex;
+    flex-direction: column;
+    .word-edit-modal-row{
+        height: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        >text{
+            color: black;
+            font-weight: 600;
+        }
+    }
+}

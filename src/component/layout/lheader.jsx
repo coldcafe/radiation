@@ -3,7 +3,6 @@ import { Router } from 'react-router';
 import  jsonToken from 'jsonwebtoken';
 import { is, fromJS } from 'immutable';
 import { Layout, Menu, Icon } from 'antd';
-import  COnfig from '../../config/index';
 import Config from '../../config/index';
 const SubMenu = Menu.SubMenu;
 const { Header } = Layout;

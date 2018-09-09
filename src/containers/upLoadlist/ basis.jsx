@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {BUtton,Col,Row,Input,DatePicker,TimePicker,message} from 'antd';
-import { ENFILE } from 'constants';
 require('./style/basis.less')
 
 export default class Basis extends Component{

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'; // 引入了React
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { is, fromJS } from 'immutable';
 import Config from '../../config/index';
 import { browserHistory } from 'react-router';
 import { initialState, goLogin } from '../../redux/action/login/loginAction';
