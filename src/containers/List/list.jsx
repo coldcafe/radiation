@@ -121,7 +121,7 @@ class List extends Component{
 		});
     }
     deleteListItem=()=>{
-		loginService.deleteListItem(this.deleteListItem.ID,(response)=>{
+		loginService.deleteListItem(this.deleteListItem.id,(response)=>{
 			Message.success('删除该条数据成功');
 			this.setState({
 				deleteItemVisible:false,
