@@ -27,10 +27,15 @@ class LoginService {
         return Xhr.get('/users/list',params,success,fail);
     }
 
+    //获取数据
     getreportslist(params,success,fail){
         return Xhr.get('/reports/list',params,success,fail);
     }
+    //删除数据
 
+    deleteReportList(params,success,fail){
+        return Xhr.delete('/reports/'+params,null,success,fail);
+    }
     //修改数据详情接口
     updatereportslist(params,success,fail){
         return Xhr.put('/reports',params,success,fail);
@@ -73,17 +78,12 @@ class LoginService {
 
     // 删除item
     deleteWordItem(params,success,fail){
-        return Xhr.delete('/reports/sketchmap/'+params,null,success,fail);
+        return Xhr.delete('/reports/doctemp/'+params,null,success,fail);
     }
     // 增加item 
     addWordItem(params,success,fail){
         return Xhr.post('/reports/doctemp',params,success,fail);
-    }
-    // 删除列表项
-    deleteListItem(params,success,fail){
-        return Xhr.delete('/reports/doctemp/'+params,'',success,fail)
-    }
-   
+    }   
     
 }
 

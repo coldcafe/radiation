@@ -74,7 +74,11 @@ class Main extends Component {
             showPictureLocal: false,  //照片展示本地上传
             itemDisable:true,   //项目名称开始不可以编辑
             danweiDisable:true, //委托单位开始不可以编辑
+            wenjianDisable:true,  //文件编号开是不可以编辑
             allWordItem:[],
+            name:'',              // 项目名称
+            docTempId:0     //模版
+
 
 
         };
@@ -172,7 +176,19 @@ class Main extends Component {
     //保存word 文档数据
     saveWordMessage = () => {
 
-        var data = { id: this.dataInfo.id, result: this.state.result }
+        if(!this.state.name){
+            message.error('请填写项目名称');
+            return;
+        }
+        if(this.state.docTempId===0){
+            message.error('请选择项目模版');
+        }
+        if(!this.state.result){
+            message.error('请填写结论');
+            return;
+        }
+
+        var data = { id: this.dataInfo.id, result: this.state.result,name:this.state.name}
         LoginService.updatereportslist(data, (response) => {
             Message.success('结论保存成功');
             this.dataInfo = response;
@@ -196,12 +212,16 @@ class Main extends Component {
     //修改所有的显示数据
     changeAllDataWithJson = () => {
         var baseInfo = this.getBaseInfo();
+        localStorage.setItem('tableObj', JSON.stringify(this.dataInfo));
+        console.log(baseInfo);
         this.setState({
             sketchMap: this.dataInfo.sketchMap,
             data: this.dataInfo.data,
             pictures: this.dataInfo.pictures,
             baseInfo: baseInfo,
             result: this.dataInfo.result,
+            name:this.dataInfo.name,
+            docTempId:this.dataInfo.docTempId,
         });
     }
     //改变baseinfo
@@ -264,6 +284,17 @@ class Main extends Component {
         })
     }
 
+    //选择word 模版
+    choosewordItem=(json)=>{
+        var data = { id: this.dataInfo.id, docTempId:json.id};
+        LoginService.updatereportslist(data,response=>{
+            message.success('修改模版成功');
+            this.dataInfo = response;
+            this.changeAllDataWithJson();
+        },error=>{
+            message.success('修改模版失败');
+        })
+    }
     // 添加measureData 的数据，删除 ，修改  删除 type ==0 ，修改 type==1
     changemeasureData = (json, type, index) => {
         if (type === 0) {
@@ -479,14 +510,16 @@ class Main extends Component {
                                     <text>项目名称</text>
                                     <Input
                                         disabled={this.state.itemDisable}
-                                        value='华东交通大学检测项目'
-
+                                        value={this.state.name}
+                                        onChange={(e)=>{this.setState({
+                                            name:e.target.value,
+                                        })}}
                                     />
                                     <Button className="title-edit-rowbtn"
                                         onClick={()=>{this.setState({itemDisable:false})}}
                                     >编辑</Button>
                                 </div>
-                                <div className="title-edit-row">
+                                {/* <div className="title-edit-row">
                                     <text>委托单位</text>
                                     <Input
                                         disabled={this.state.danweiDisable}
@@ -496,16 +529,29 @@ class Main extends Component {
                                         onClick={()=>{this.setState({danweiDisable:false})}}
                                     >编辑</Button>
                                 </div>
+                                <div className="title-edit-row">
+                                    <text>文件编号</text>
+                                    <Input
+                                        disabled={this.state.wenjianDisable}
+                                        value='华东交通大学机械学院'
+                                    />
+                                    <Button className="title-edit-rowbtn"
+                                        onClick={()=>{this.setState({wenjianDisable:false})}}
+                                    >编辑</Button>
+                                </div> */}
                                 <div className="title-edit-row-word">
                                     <text>请选择生成结果的word模版</text>
                                     <div className="word-myitem">
-                                    <ul className="word-container" style={{ width:205*this.state.allWordItem.length}}>
+                                    <ul className="word-container" style={{ width:210*this.state.allWordItem.length}}>
                                             {this.state.allWordItem.map((item, index) => {
                                                 return (
-                                                    <li className="word-wall" key={index}>
+                                                    <li className="word-wall" key={index} 
+                                                    style={{backgroundColor: this.state.docTempId===item.id? '#FFDEAD':'#e7e7e7'}}
+                                                    >
                                                         <WordItem  
-                                                            data={{title:'m',address:'m',tel:'m',facsimile:'m',email:'email'}}
-
+                                                            data={item}
+                                                            choosewordItem={(json)=>{this.choosewordItem(json)}}  
+                    
                                                         />
                                                     </li>
                                                 )

@@ -205,18 +205,34 @@ canvas{
             overflow-x: scroll;
         }
         .word-container{
-           
             margin-top: 10px;
             display: flex;
             flex-direction: row;
             overflow-x: scroll;
             overflow-y: hidden;
-            width: 2000px;
+            height: 250px;
             .word-wall{
-                width: 150px;
-                height: 200px;
+                width: 200px;
+                height: 250px;
                 margin-right: 10px;
-                background-color:rgba(0, 0, 0, 0.7);  
+                background-color:rgba(231, 231, 231,1);
+                .word-wall-body{
+                    display:flex;
+                    flex-direction: row;
+                    height: 40px;
+                    align-items: center;
+                }
+                .word-wall-title{
+                    color: black;
+                    font-weight: 600;
+                    width: 70px;
+                    text-align: right;
+                
+                }  
+                .word-wall-message{
+                    margin-left:10px;
+                }
+
             }
 
 

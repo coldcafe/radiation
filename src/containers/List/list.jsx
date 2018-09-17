@@ -121,13 +121,12 @@ class List extends Component{
 		});
     }
     deleteListItem=()=>{
-		loginService.deleteListItem(this.deleteListItem.ID,(response)=>{
+		loginService.deleteReportList(this.deleteItem.id,(response)=>{
 			Message.success('删除该条数据成功');
 			this.setState({
 				deleteItemVisible:false,
 			});
 			this.getUserList();
-			
 		},error=>{
 			console.log(error);
 			Message.error('删除该条数据失败');
