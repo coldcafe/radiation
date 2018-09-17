@@ -6,7 +6,7 @@ export default class DataTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: this.props.data || {},
+            data: this.props.data || [],
             editModal: false,
             currentRow: [],
             currentIdx: 0,
@@ -14,6 +14,12 @@ export default class DataTable extends Component {
             currentmeasurePoint: '',
         }
     }
+    componentWillReceiveProps(props){
+        this.setState({
+            data:props.data||[],
+        })
+    }
+
     getmeasureData = (type, data) => {  //type  0代表测量位置 1代表展示的数据
         if (data) {
             let arrayData = []

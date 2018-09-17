@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Table,Spin ,Pagination,DatePicker,Input, Button, Modal} from 'antd';
+import { Table,Spin ,Pagination,DatePicker,Input, Button, Modal,Message} from 'antd';
 import LoginService from '../../services/loginService';
 import styles from './style/list.less';
 import loginService from '../../services/loginService';
@@ -20,8 +20,6 @@ class List extends Component{
             mesurePerson:null,
             address:null,
             deleteItemVisible: false
-
-            
         }
         this.startTime=null;
         this.endTime=null;
@@ -126,7 +124,7 @@ class List extends Component{
 			this.setState({
 				deleteItemVisible:false,
 			});
-			this.getUserList();
+			this.getListInfo();
 		},error=>{
 			console.log(error);
 			Message.error('删除该条数据失败');

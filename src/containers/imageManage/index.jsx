@@ -29,8 +29,7 @@ class ImageItem extends Component {
     render() {
         var { item, setCurrentUrl } = this.props;
         return (
-            <div>
-                <li className="pic-wall large-view"
+                <li className="large-view"
                     key={item.id}
                     onClick={(e) => { setCurrentUrl(Config.downimgUrl+item.pic) }}
                     onMouseMove={() => { this.setState({ showDeleteimg: true }) }}
@@ -49,26 +48,25 @@ class ImageItem extends Component {
                             </Button>
                             : null
                     }
-                </li>
-                <Modal
-                    onCancel={() => { this.setState({ visible: false }) }}
-                    onOk={() => { this.deleteChooseImg() }}
-                    title={'删除点位示意图模版'}
-                    visible={this.state.visible}
+                    <Modal
+                        onCancel={() => { this.setState({ visible: false }) }}
+                        onOk={() => { this.deleteChooseImg() }}
+                        title={'删除点位示意图模版'}
+                        visible={this.state.visible}
 
-                >
-                    <div
-                        style={{
-                            display: 'flex', width: 200, height: 100, flexDirection: 'column',
-                            alignItems: 'center', alignContent: 'center'
-                        }}
                     >
-                        <text
-                            style={{ fontSize: 15, textAlign: 'center' }}
-                        >确定要删除这张点位示意图</text>
-                    </div>
-                </Modal>
-            </div>
+                        <div
+                            style={{
+                                display: 'flex', width: 200, height: 100, flexDirection: 'column',
+                                alignItems: 'center', alignContent: 'center'
+                            }}
+                        >
+                            <text
+                                style={{ fontSize: 15, textAlign: 'center' }}
+                            >确定要删除这张点位示意图</text>
+                        </div>
+                    </Modal>
+                </li>
         )
     }
 }
@@ -145,7 +143,7 @@ class ImageManage extends Component {
                     </Upload>
                 </div>
                 <div>
-                    <ul className="pic-container">
+                    <ul className="view-module">
                         {this.state.pictures.map((item, index) => {
                             return (
                                 <ImageItem  key={item.id} item={item} setCurrentUrl={this.setCurrentUrl} getsketchmap={this.getsketchmap} />

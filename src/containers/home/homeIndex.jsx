@@ -77,7 +77,8 @@ class Main extends Component {
             wenjianDisable:true,  //文件编号开是不可以编辑
             allWordItem:[],
             name:'',              // 项目名称
-            docTempId:0     //模版
+            docTempId:0 ,    //模版
+            delegateunit:'',
 
 
 
@@ -165,7 +166,7 @@ class Main extends Component {
                 let link = document.createElement('a')
                 link.style.display = 'none'
                 link.href = url
-                link.setAttribute('download', ' 测试.doc');
+                link.setAttribute('download', this.dataInfo.name+'.doc');
                 document.body.appendChild(link)
                 link.click()
             })
@@ -180,15 +181,21 @@ class Main extends Component {
             message.error('请填写项目名称');
             return;
         }
+        if(!this.state.delegateunit){
+            message.error('请填写项目委托单位');
+            return;
+        }
         if(this.state.docTempId===0){
             message.error('请选择项目模版');
+            return;
         }
+        
         if(!this.state.result){
             message.error('请填写结论');
             return;
         }
 
-        var data = { id: this.dataInfo.id, result: this.state.result,name:this.state.name}
+        var data = { id: this.dataInfo.id, result: this.state.result,name:this.state.name,delegateunit:this.state.delegateunit}
         LoginService.updatereportslist(data, (response) => {
             Message.success('结论保存成功');
             this.dataInfo = response;
@@ -222,6 +229,7 @@ class Main extends Component {
             result: this.dataInfo.result,
             name:this.dataInfo.name,
             docTempId:this.dataInfo.docTempId,
+            delegateunit:this.dataInfo.delegateunit,
         });
     }
     //改变baseinfo
@@ -519,17 +527,20 @@ class Main extends Component {
                                         onClick={()=>{this.setState({itemDisable:false})}}
                                     >编辑</Button>
                                 </div>
-                                {/* <div className="title-edit-row">
+                                     <div className="title-edit-row">
                                     <text>委托单位</text>
                                     <Input
                                         disabled={this.state.danweiDisable}
-                                        value='华东交通大学机械学院'
+                                        value={this.state.delegateunit}
+                                        onChange={(e)=>{this.setState({
+                                            delegateunit:e.target.value,
+                                        })}}
                                     />
                                     <Button className="title-edit-rowbtn"
                                         onClick={()=>{this.setState({danweiDisable:false})}}
                                     >编辑</Button>
                                 </div>
-                                <div className="title-edit-row">
+                                {/* <div className="title-edit-row">
                                     <text>文件编号</text>
                                     <Input
                                         disabled={this.state.wenjianDisable}
@@ -538,7 +549,7 @@ class Main extends Component {
                                     <Button className="title-edit-rowbtn"
                                         onClick={()=>{this.setState({wenjianDisable:false})}}
                                     >编辑</Button>
-                                </div> */}
+                                </div>  */}
                                 <div className="title-edit-row-word">
                                     <text>请选择生成结果的word模版</text>
                                     <div className="word-myitem">
