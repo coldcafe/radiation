@@ -32,11 +32,11 @@ class ImageItem extends Component {
             <div>
                 <li className="pic-wall large-view"
                     key={item.id}
-                    onClick={(e) => { setCurrentUrl(item.pic) }}
+                    onClick={(e) => { setCurrentUrl(Config.downimgUrl+item.pic) }}
                     onMouseMove={() => { this.setState({ showDeleteimg: true }) }}
                     onMouseLeave={() => { this.setState({ showDeleteimg: false }) }}
                 >
-                    <img src={Config.downimgUrl+item.pic} alt="" style={{ width: '200px', height: 'auto' }} />
+                    <img src={Config.downimgUrl+item.pic} alt=""/>
                     {
                         this.state.showDeleteimg === true ?
                             <Button
