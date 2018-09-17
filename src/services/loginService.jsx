@@ -79,6 +79,10 @@ class LoginService {
     addWordItem(params,success,fail){
         return Xhr.post('/reports/doctemp',params,success,fail);
     }
+    // 删除列表项
+    deleteListItem(params,success,fail){
+        return Xhr.delete('/reports/doctemp/'+params,'',success,fail)
+    }
    
     
 }

@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Table,Spin ,Pagination,DatePicker,Input, Button} from 'antd';
+import { Table,Spin ,Pagination,DatePicker,Input, Button, Modal} from 'antd';
 import LoginService from '../../services/loginService';
 import styles from './style/list.less';
 import loginService from '../../services/loginService';
@@ -19,6 +19,7 @@ class List extends Component{
             loading:true,
             mesurePerson:null,
             address:null,
+            deleteItemVisible: false
 
             
         }
@@ -26,6 +27,7 @@ class List extends Component{
         this.endTime=null;
         this.page=1;
         this.limit=10;
+        this.deleteItem = {}
     }
     componentDidMount(){
         this.getListInfo();
@@ -111,6 +113,29 @@ class List extends Component{
     onClickToSearch=()=>{
         this.getListInfo();
     }
+    showdeleteListItem=(json)=>{
+		this.deleteItem=json;
+		console.log(this.deleteItem);
+		this.setState({
+			deleteItemVisible:true,
+		});
+    }
+    deleteListItem=()=>{
+		loginService.deleteListItem(this.deleteListItem.ID,(response)=>{
+			Message.success('删除该条数据成功');
+			this.setState({
+				deleteItemVisible:false,
+			});
+			this.getUserList();
+			
+		},error=>{
+			console.log(error);
+			Message.error('删除该条数据失败');
+			this.setState({
+				deleteItemVisible:false,
+			});
+		})
+	}
     render(){
         function date_format(val){
             if(!val){
@@ -177,7 +202,14 @@ class List extends Component{
         },{
             title:'详情',
             dataIndex:'details',
-            render:(text, record, index)=><Link to="/home" onClick={() => self.toDetail(record)}>查看详情</Link>
+            render:(text, record, index)=>
+            <div>
+                <Link to="/home" onClick={() => self.toDetail(record)}>查看详情</Link>
+                <Button 
+                    onClick={()=>{this.showdeleteListItem(record)}}
+                    style={{backgroundColor:'transparent',borderColor:'transparent',color:'red'}}
+                >删除</Button>
+            </div>
         }]
         return(
             // icon="user"
@@ -242,6 +274,21 @@ class List extends Component{
                     </div>
                     
                 </Spin>
+
+                <Modal
+						visible={this.state.deleteItemVisible}
+						onCancel={()=>{this.setState({deleteItemVisible:false})}}
+						onOk={()=>{this.deleteListItem()}}
+					>
+						<div 
+							style={{height:100,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}
+
+						>
+							<text 
+								style={{fontSize:15,fontWeight:15,marginBottom:20,color:'black'}}
+							>{'确定需要删除任务编号为"'+this.deleteItem.taskNO+'"这条数据吗？'}</text>
+						</div>
+					</Modal>
                 
             </div>
         )
