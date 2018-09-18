@@ -160,15 +160,15 @@ class Main extends Component {
             responseType: 'blob',
             headers: { 'Authorization': Config.localItem(Config.localKey.userToken) }
         })
-            .then(function (response) {
+            .then( (response) =>{
                 console.log(response);
-                let url = window.URL.createObjectURL(new Blob([response.data]))
-                let link = document.createElement('a')
-                link.style.display = 'none'
-                link.href = url
+                let url = window.URL.createObjectURL(new Blob([response.data]));
+                let link = document.createElement('a');
+                link.style.display = 'none';
+                link.href = url;
                 link.setAttribute('download', this.dataInfo.name+'.doc');
-                document.body.appendChild(link)
-                link.click()
+                document.body.appendChild(link);
+                link.click();
             })
             .catch(function (error) {
                 console.log(error);
@@ -181,7 +181,7 @@ class Main extends Component {
             message.error('请填写项目名称');
             return;
         }
-        if(!this.state.delegateunit){
+        if(!this.state.delegateUnit){
             message.error('请填写项目委托单位');
             return;
         }
