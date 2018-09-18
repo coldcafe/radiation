@@ -78,7 +78,7 @@ class Main extends Component {
             allWordItem:[],
             name:'',              // 项目名称
             docTempId:0 ,    //模版
-            delegateunit:'',
+            delegateUnit:'',
 
 
 
@@ -195,7 +195,7 @@ class Main extends Component {
             return;
         }
 
-        var data = { id: this.dataInfo.id, result: this.state.result,name:this.state.name,delegateunit:this.state.delegateunit}
+        var data = { id: this.dataInfo.id, result: this.state.result,name:this.state.name,delegateUnit:this.state.delegateUnit}
         LoginService.updatereportslist(data, (response) => {
             Message.success('结论保存成功');
             this.dataInfo = response;
@@ -229,7 +229,7 @@ class Main extends Component {
             result: this.dataInfo.result,
             name:this.dataInfo.name,
             docTempId:this.dataInfo.docTempId,
-            delegateunit:this.dataInfo.delegateunit,
+            delegateUnit:this.dataInfo.delegateUnit,
         });
     }
     //改变baseinfo
@@ -531,9 +531,9 @@ class Main extends Component {
                                     <text>委托单位</text>
                                     <Input
                                         disabled={this.state.danweiDisable}
-                                        value={this.state.delegateunit}
+                                        value={this.state.delegateUnit}
                                         onChange={(e)=>{this.setState({
-                                            delegateunit:e.target.value,
+                                            delegateUnit:e.target.value,
                                         })}}
                                     />
                                     <Button className="title-edit-rowbtn"
