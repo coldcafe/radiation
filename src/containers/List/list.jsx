@@ -104,7 +104,7 @@ class List extends Component{
     //获取到输入address
     getAddress=(e)=>{
         this.page=1;
-        his.setState({
+        this.setState({
             address:e.target.value,
         });
     }
