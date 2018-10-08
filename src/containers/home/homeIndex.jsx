@@ -294,7 +294,9 @@ class Main extends Component {
 
     //选择word 模版
     choosewordItem=(json)=>{
+      
         var data = { id: this.dataInfo.id, docTempId:json.id};
+        console.log(data);
         LoginService.updatereportslist(data,response=>{
             message.success('修改模版成功');
             this.dataInfo = response;

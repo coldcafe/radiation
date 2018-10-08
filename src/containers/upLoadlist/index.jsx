@@ -102,6 +102,9 @@ export default class UploadList extends Component{
         })
         var baseInfo=this.refs.basisInfo.getBaseInfo();
         if(!baseInfo){
+            this.setState({
+                down:false,
+            })
             return;
         }
         this.data={...baseInfo,pictures:this.pictures,sketchMap:this.sketchMap,data:this.state.measureData};
