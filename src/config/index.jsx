@@ -1,6 +1,6 @@
 const Main = {
 	//http://193.112.148.188:5000/login
-	target: process.env.NODE_ENV !== 'production' ? 'http://120.78.156.32:5000' : 'http://120.78.156.32:5000', //目标网站
+	target: process.env.NODE_ENV !== 'production' ? 'http://120.78.156.32:3000' : 'http://120.78.156.32:3000', //目标网站
 	name: 'Ant Design Admin',
 	downimgUrl: 'http://120.78.156.32:3000/file/files/',
 	uploadimgUrl:'http://120.78.156.32:3000/file/upload',
