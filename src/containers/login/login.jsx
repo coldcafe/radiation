@@ -6,6 +6,7 @@ import { browserHistory } from 'react-router';
 import { initialState, goLogin } from '../../redux/action/login/loginAction';
 import Tool from '../../services/xhr/index';
 import styles from './style/login.less';
+import md5 from 'blueimp-md5'
 
 
 import { Spin, Form, Input, Button, message } from 'antd';
@@ -39,7 +40,7 @@ class Login extends Component {
                     password = values.password, // 密码
                     loginParams = { // 登录参数
                         username: username,
-                        password: password	
+                        password: md5(password)	
 					};
 				 actions.goLogin(loginParams);
 		     }

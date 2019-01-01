@@ -16,8 +16,8 @@ const Option = Select.Option;
 
 /* 以类的方式创建一个组件 */
 class Main extends Component {
-    constructor(props) {
-    	super(props);
+    constructor(props, context) {
+    	super(props, context);
         this.state = {
             loading: false,
 			dataSource:[],
@@ -218,6 +218,10 @@ class Main extends Component {
 			registerPassword:e.target.value,
 		});
 	}
+	toDetail() {
+		console.log(this.context)
+		this.context.router.push('/userRegister')
+	}
 	render() {
 		return (	
 		<div className="user-container">
@@ -229,9 +233,7 @@ class Main extends Component {
                     spinning={this.state.loading}
                 >
 					<div>
-						<Button onClick={()=>{this.setState({
-							visible:true,
-						})}}
+						<Button onClick={()=>{this.toDetail()}}
 						size='large'
 						>添加用户</Button>
 					</div>
@@ -359,6 +361,7 @@ class Main extends Component {
 }
 
 Main.contextTypes = {
+	router: React.PropTypes.object.isRequired
 };
 
 export default Main;

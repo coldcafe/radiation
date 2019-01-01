@@ -84,7 +84,12 @@ class LoginService {
     addWordItem(params,success,fail){
         return Xhr.post('/reports/doctemp',params,success,fail);
     }   
-    
+    getRoles(params,success,fail) {
+        return Xhr.get('/users/roles',params,success,fail);
+    }
+    getUsersArea(params, success, fail) {
+        return Xhr.get('/users/area',params,success,fail);
+    }
 }
 
 // 实例化再导出

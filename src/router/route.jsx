@@ -132,13 +132,16 @@ const twoui = (location, cb) => {
 
 const userRegister=(location, cb) => {
     require.ensure([], require => {
-        cb(null, require('../containers/user/userRegister').default)
+        cb(null, require('../containers/user/userRegister').WrappedUserRegister)
     }, 'userRegister');
 }
 
+// console.log(require('../containers/user/userRegister').default)
+
 // 登录验证 。这里是判断存在token ，如果存在token 那么
 const requireAuth = (nextState, replace) => {
-    let token = Config.localItem(Config.localKey.userToken);
+    // let token = Config.localItem(Config.localKey.userToken);
+    let token = 'Dragon'
     console.log('token======'+token);
 	if(!token ) { // 模拟Token保存2个小时
 		replace({
@@ -161,7 +164,7 @@ const RouteConfig = (
 			<Route path="/general/button" getComponent={button} onEnter={requireAuth} />
 			<Route path="/general/icon" getComponent={icon} onEnter={requireAuth} />
             <Route path="/user" getComponent={user} onEnter={requireAuth} />
-            <Route path="/userRegister" getComponent={userRegister} onEnter={requireAuth} />
+            <Route path="/userRegister" getComponent={userRegister} onEnter={requireAuth}/>
 			<Route path="/setting" getComponent={setting} onEnter={requireAuth} />
 			<Route path="/adver" getComponent={adver} onEnter={requireAuth} />
 			<Route path="/ui/oneui" getComponent={oneui} onEnter={requireAuth} />

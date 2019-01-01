@@ -74,3 +74,24 @@ export const goLogin = (params) => {
     }
 } 
 
+export const asd = (params) => {
+    console.log(params);
+    return dispatch => {
+        dispatch(loading(true));
+        LoginService.goLogin(params, (res) => {
+            dispatch(loading(false));
+            if(res){
+                dispatch(getToken(res.token));
+                Config.localItem(Config.localKey.userToken,res.token);
+                browserHistory.push('/List/list');
+            }else{
+                Message.error('系统错误');
+
+            }
+        },(error)=>{
+            dispatch(loading(false));
+            Message.error(error.message);
+        })
+    }
+}
+
