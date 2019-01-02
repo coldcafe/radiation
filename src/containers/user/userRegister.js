@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from "react"; 
 import { cloneDeep } from 'lodash';
 import md5 from 'blueimp-md5'
-import { Form, Select, Button, Input, Cascader } from "antd";
+import { Form, Select, Button, Input, Cascader, message } from "antd";
 import loginService from "../../services/loginService";
 
 const { Option } = Select;
@@ -47,7 +47,7 @@ class UserRegister extends React.Component {
         }
         if (this.state.if_country_admin) {
           loginService.goRegister(params, (data) => {
-            console.log(data);
+            message.success('创建用户成功!');
           });
           return;
         } else {
@@ -63,7 +63,7 @@ class UserRegister extends React.Component {
               params.companyAreaId = this.state.companyAreaId;
           }
           loginService.goRegister(params, (data) => {
-            console.log(data);
+            message.success('创建用户成功!');
           })
         }
       }
@@ -102,7 +102,6 @@ class UserRegister extends React.Component {
   }
 
   selectAreas(val) {
-    console.log(val);
     if (val == 999999) {
       this.setState({ select_areas_status: false, companyAreaId: val[val.length - 2] });
     }
