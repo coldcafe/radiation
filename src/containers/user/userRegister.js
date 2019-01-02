@@ -1,23 +1,25 @@
 import React, { Component, PropTypes } from "react"; 
 import { cloneDeep } from 'lodash';
+import jsonToken from "jsonwebtoken";
 import md5 from 'blueimp-md5'
 import { Form, Select, Button, Input, Cascader, message } from "antd";
 import loginService from "../../services/loginService";
+import Config from "../../config";
 
 const { Option } = Select;
 
 class UserRegister extends React.Component {
   constructor() {
     super();
+    let token = Config.localItem(Config.localKey.userToken);
+    let userInfo = jsonToken.decode(token);
+    this.role = userInfo.role;
     this.state = {
       roles: [],
-      target: undefined,
-      areas: [],
       residences: [],
-      residence: [],
-      init_residences: [],
-      select_areas_status: true,
+      if_select_areas: true,
       if_country_admin: false,
+      if_create_company: false,
       selected_areas: '',
       companyAreaId: 0
     };
@@ -51,7 +53,7 @@ class UserRegister extends React.Component {
           });
           return;
         } else {
-          if (this.state.select_areas_status) {
+          if (this.state.if_select_areas) {
             let val = values.residence[values.residence.length - 1];
             if (values.role === 'companyadmin') {
               params.companyId = val;
@@ -68,13 +70,15 @@ class UserRegister extends React.Component {
         }
       }
     });
-  };
+  }
 
   onChange(val) {
     if (val === 'countryadmin') {
-      this.setState({ if_country_admin: true });
+      this.setState({ if_country_admin: true, if_create_company: false, if_select_areas: false });
+    } else if (val === 'auditor' || val === 'tester') {
+      this.setState({if_country_admin: false, if_select_areas: false});
     } else {
-      this.setState({ if_country_admin: false });
+      this.setState({if_country_admin: false, if_select_areas: true, if_create_company: false });
     }
     this.props.form.setFields({
       ['residence']: {value: []}
@@ -83,9 +87,19 @@ class UserRegister extends React.Component {
       tRole: val
     };
     loginService.getUsersArea(params, data => {
-      this.setState({ init_residences: cloneDeep(data), residences: this.createResidences(data) });
-      this.setState({ areas: data });
+      this.setState({ residences: this.createResidences(data) });
     });
+  }
+
+  selectAreas(val) {
+    if (val.indexOf(999999) > -1) {
+      this.setState({ if_select_areas: false, companyAreaId: val[val.length - 2], if_create_company: true, if_country_admin: false });
+    }
+    this.setState({ selected_areas: val });
+  }
+
+  handleClickSelectAreas() {
+    this.setState({ if_select_areas: true, if_create_company: false });
   }
 
   createResidences(list) {
@@ -101,39 +115,23 @@ class UserRegister extends React.Component {
     });
   }
 
-  selectAreas(val) {
-    if (val == 999999) {
-      this.setState({ select_areas_status: false, companyAreaId: val[val.length - 2] });
-    }
-    this.setState({ selected_areas: val });
-  }
-
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 }
     };
-    return (
-      <Form onSubmit={this.handleSubmit} style={{ marginTop: 40 }}>
+    return <Form onSubmit={this.handleSubmit} style={{ marginTop: 40 }}>
         <Form.Item {...formItemLayout} label="身份" hasFeedback>
           {getFieldDecorator("role", {
             rules: [{ required: true, message: "请选择一个身份角色!" }]
-          })(
-            <Select
-              placeholder="请选择一个身份角色"
-              onChange={o => this.onChange(o)}
-            >
-              {this.state.roles.map((x, i) => (
-                <Option value={x.key} key={i}>
+          })(<Select placeholder="请选择一个身份角色" onChange={o => this.onChange(o)}>
+              {this.state.roles.map((x, i) => <Option value={x.key} key={i}>
                   {x.name}
-                </Option>
-              ))}
-            </Select>
-          )}
+                </Option>)}
+            </Select>)}
         </Form.Item>
-        {this.state.select_areas_status && !this.state.if_country_admin ? (
-          <Form.Item {...formItemLayout} label="省/市/区">
+        {!this.state.if_country_admin && this.state.if_select_areas && <Form.Item {...formItemLayout} label="省/市/区">
             {getFieldDecorator("residence", {
               initialValue: [],
               rules: [
@@ -143,26 +141,20 @@ class UserRegister extends React.Component {
                   message: "请选择省市区或者企业!"
                 }
               ]
-            })(
-              <Cascader
-                onChange={this.selectAreas.bind(this)}
-                options={this.state.residences}
-                placeholder="请选择省市区或者企业"
-              />
-            )}
-          </Form.Item>
-        ) : (
-          !this.state.if_country_admin && <Form.Item {...formItemLayout} label="企业名" hasFeedback>
+            })(<Cascader onChange={this.selectAreas.bind(this)} options={this.state.residences} placeholder="请选择省市区或者企业" />)}
+          </Form.Item>}
+        {!this.state.if_country_admin && this.state.if_create_company && <Form.Item {...formItemLayout} label="企业名" hasFeedback>
             {getFieldDecorator("company_name", {
               rules: [{ required: true, message: "请输入公司名!" }]
             })(<Input type="text" />)}
-          </Form.Item>
-        )}
-        {!this.state.select_areas_status && (
-          <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-            <Button onClick={() => this.setState({select_areas_status: true})}>选择省市区企业</Button>
-          </Form.Item>
-        )}
+          </Form.Item>}
+        {this.state.if_create_company && <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+            <Button
+              onClick={() => this.handleClickSelectAreas()}
+            >
+              选择省市区企业
+            </Button>
+          </Form.Item>}
         <Form.Item {...formItemLayout} label="用户名" hasFeedback>
           {getFieldDecorator("username", {
             rules: [{ required: true, message: "请输入用户名!" }]
@@ -183,8 +175,7 @@ class UserRegister extends React.Component {
             添加
           </Button>
         </Form.Item>
-      </Form>
-    );
+      </Form>;
   }
 }
 
