@@ -62,16 +62,12 @@ class Main extends Component {
 			
 			return(
 				<div>
-					{record.Character!='超级管理员'?
+					{record.Character!='测量人员'||record.Character!='审核人员'?
 					<div>
 					<Button 
 						onClick={()=>{this.showdeleteUserWithJSON(record)}}
 						style={{backgroundColor:'transparent',borderColor:'transparent',color:'red'}}
 					>删除</Button>
-					<Button 
-						onClick={()=>{this.showchangeUserCharacterWithJSON(record)}}
-						style={{backgroundColor:'transparent',borderColor:'transparent',color:'#1478E3'}}
-					>编辑</Button>
 					</div>
 					:
 					null
@@ -153,10 +149,20 @@ class Main extends Component {
 					var role;
 					if(item.role==='superadmin'){
 						role='超级管理员';
-					}else if(item.role==='checker'){
+					}else if(item.role==='countryadmin'){
+						role='国家级管理员';
+					}else if(item.role==='provinceadmin'){
+						role='省级管理员';
+					}else if(item.role==='districtadmin'){
+						role='区级管理员';
+					}else if(item.role==='cityadmin'){
+						role='市级管理员';
+					}else if(item.role==='companyadmin'){
+						role='企业级管理员';
+					}else if(item.role==='tester'){
+						role='测量人员';
+					}else if(item.role==='auditor'){
 						role='审核人员';
-					}else{
-						role='测量人员'
 					}
 					var userjson={count:index,ID:item.id,username:item.username,Character:role};
 					data.push(userjson);
