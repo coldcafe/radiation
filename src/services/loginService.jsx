@@ -90,6 +90,11 @@ class LoginService {
     getUsersArea(params, success, fail) {
         return Xhr.get('/users/area',params,success,fail);
     }
+    //修改密码
+    changeuserPasswor(params,success,fail){
+        return Xhr.put('/users/password',params,success,fail);
+    }
+
 }
 
 // 实例化再导出

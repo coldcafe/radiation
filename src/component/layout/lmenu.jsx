@@ -28,7 +28,6 @@ export class Lmenu extends Component {
   }
   componentWillMount() {
     loginService.getRoles("", roles => {
-      console.log(role);
       this.setState({ roles });
     });
   }

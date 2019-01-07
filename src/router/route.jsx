@@ -140,8 +140,7 @@ const userRegister=(location, cb) => {
 
 // 登录验证 。这里是判断存在token ，如果存在token 那么
 const requireAuth = (nextState, replace) => {
-    // let token = Config.localItem(Config.localKey.userToken);
-    let token = 'Dragon'
+     let token = Config.localItem(Config.localKey.userToken);
     console.log('token======'+token);
 	if(!token ) { // 模拟Token保存2个小时
 		replace({
